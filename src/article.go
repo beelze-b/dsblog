@@ -7,7 +7,9 @@ import(
 	_ "strings" //remove blank identifier to remove unused compiler error
 	"net/url"
 	"strconv"
+	"encoding/json"
 )
+
 
 type Article struct{
 	Title string
@@ -19,6 +21,17 @@ type Article struct{
 	UniqueViews int //this information might need to be handled by a database
 }
 
+
+func SaveJSONArticle(a Article) {
+		b, err := json.Marshal(a)
+		if err != nil {
+			log.Fatal(err)
+			return
+		}
+		filePath = '../static/articles' + a.Title
+		// 0644 means overwrite
+		ioutil.writeFile(filePath, b, 0644)
+}
 /*
 Creates a pointer to an article. Article format must have format above.
 Parsing isn't set up, but it could be done using this format:
@@ -32,12 +45,9 @@ Content:
 	Content
 Detail to change as no articles are written yet.
 */
-func LoadArticle(articleId int) *Article{
-	/*Use mgo (MongoDB bindings for Golang) to load article*/
-	content, err := ioutil.ReadFile(Title + ".txt")
-	if err != nil {
-		return new(Article)
-	}
+func LoadJSONArticle(articleId int) *Article{
+	b, err := 
+
 }
 
 /*
