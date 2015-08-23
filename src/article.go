@@ -1,13 +1,14 @@
-package article
+package main
 
 import(
 	"time"
 	_ "text/template" //remove blank identifier to remove unused compiler error
 	"io/ioutil"
-	_ "strings" //remove blank identifier to remove unused compiler error
+  "strings" //remove blank identifier to remove unused compiler error
 	"net/url"
 	"strconv"
 	"encoding/json"
+	"log"
 )
 
 
@@ -28,9 +29,10 @@ func SaveJSONArticle(a Article) {
 			log.Fatal(err)
 			return
 		}
-		filePath = '../static/articles' + a.Title
+		title := strings.ToLower(strings.Replace(a.Title, " ", "_", -1))
+		filePath := "/static/articles" + title
 		// 0644 means overwrite
-		ioutil.writeFile(filePath, b, 0644)
+		ioutil.WriteFile(filePath, b, 0644)
 }
 /*
 Creates a pointer to an article. Article format must have format above.
@@ -45,8 +47,21 @@ Content:
 	Content
 Detail to change as no articles are written yet.
 */
-func LoadJSONArticle(articleId int) *Article{
-	b, err := 
+func LoadJSONArticle(title string) Article{
+	// must first parse title to find file and then create article out of it
+	filePath := "/static/articles/" + strings.ToLower(strings.Replace(title, " ", "_", -1))
+	b, err := ioutil.ReadFile(filePath)
+	if err != nil {
+		log.Fatal(err)
+	}
+	var article Article
+	err = json.Unmarshal(b, &article)
+
+	if err == nil {
+		return article
+	} else {
+		return Article{}
+	}
 
 }
 
