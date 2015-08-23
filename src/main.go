@@ -12,5 +12,6 @@ import (
 
 func main() {
   http.handleFunc('/', homePageFunc)
-  http.handleFunc('/static/', staticHandler)
+  fs := http.FileServer(http.Dir("static"))
+  http.Handle("/static/", http.StripPrefix("/static/", fs))
 }
