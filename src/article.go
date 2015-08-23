@@ -62,7 +62,6 @@ func LoadJSONArticle(title string) Article{
 	} else {
 		return Article{}
 	}
-
 }
 
 /*
