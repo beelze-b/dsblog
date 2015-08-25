@@ -1,21 +1,20 @@
 package main
 
 import (
-    "flag"
+    "github.com/NabeelSarwar/dsblog/src/article"
     "html/template"
-    "log"
     "net/http"
 )
 
 
-func ArticleTemplate(w http.ResponseWriter, r *http.Request, a Article) {
-  t, _ := template.ParseFiles("/static/html/articleTemplate.html")
+func ArticleTemplate(w http.ResponseWriter, r *http.Request, a article.Article) {
+  t, _ := template.ParseFiles("src/static/html/articleTemplate.html")
   t.Execute(w, a)
 }
 
 func articleHandler(w http.ResponseWriter, r *http.Request) {
     title := r.URL.Path[len("/article/"):]
-    article, err := LoadJSONArticle(title)
+    article, err := article.LoadJSONArticle(title)
     if err != nil {
         http.Error(w, err.Error(), http.StatusInternalServerError)
         return
@@ -25,8 +24,8 @@ func articleHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-  http.handleFunc('/', homePageFunc)
-  fs := http.FileServer(http.Dir("static"))
+  http.HandleFunc("/", HomePageFunc)
+  fs := http.FileServer(http.Dir("src/static"))
   http.Handle("/static/", http.StripPrefix("/static/", fs))
 
 }
