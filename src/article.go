@@ -1,4 +1,3 @@
-package main
 
 import(
 	"time"
@@ -18,8 +17,6 @@ type Article struct{
 	Date time.Time
 	Tags []string
 	Content []byte //content should be template style: see documentation details on golang site
-	Views int //this information might have to handled by a database
-	UniqueViews int //this information might need to be handled by a database
 }
 
 
@@ -33,6 +30,7 @@ func SaveJSONArticle(a Article) {
 		filePath := "/static/articles" + title
 		// 0644 means overwrite
 		ioutil.WriteFile(filePath, b, 0644)
+		return
 }
 /*
 Creates a pointer to an article. Article format must have format above.
@@ -47,20 +45,20 @@ Content:
 	Content
 Detail to change as no articles are written yet.
 */
-func LoadJSONArticle(title string) Article{
+func LoadJSONArticle(title string) (Article, error){
 	// must first parse title to find file and then create article out of it
 	filePath := "/static/articles/" + strings.ToLower(strings.Replace(title, " ", "_", -1))
 	b, err := ioutil.ReadFile(filePath)
 	if err != nil {
-		log.Fatal(err)
+		return nil, err
 	}
 	var article Article
 	err = json.Unmarshal(b, &article)
 
 	if err == nil {
-		return article
+		return article, nil
 	} else {
-		return Article{}
+		return Article{}, nil
 	}
 }
 
