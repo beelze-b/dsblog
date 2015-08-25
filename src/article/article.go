@@ -51,7 +51,7 @@ func LoadJSONArticle(title string) (Article, error){
 	filePath := "/static/articles/" + strings.ToLower(strings.Replace(title, " ", "_", -1))
 	b, err := ioutil.ReadFile(filePath)
 	if err != nil {
-		return nil, err
+		return Article{}, err
 	}
 	var article Article
 	err = json.Unmarshal(b, &article)
