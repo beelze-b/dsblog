@@ -74,5 +74,14 @@ func (a *Article) parseTitle() string {
 }
 
 func (a *Article) addComment(author string, date string, comment string) {
-	var entry = "
-	a.Comments.append(
+	var entry = `<li class="comment">
+                                <div class="clearfix">
+                                    <h4 class="pull-left">` + author + `</h4>
+                                    <p class="pull-right">` + date + `</p>
+                                </div>
+                                <p>
+                                <em>` + comment + `</em>
+                                </p>
+                            </li>`
+	append(a.Comments, entry)
+}
