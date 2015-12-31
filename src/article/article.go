@@ -83,5 +83,5 @@ func (a *Article) addComment(author string, date string, comment string) {
                                 <em>` + comment + `</em>
                                 </p>
                             </li>`
-	append(a.Comments, entry)
+	a.Comments = append(a.Comments, entry)
 }
