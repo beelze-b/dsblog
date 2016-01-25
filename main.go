@@ -63,9 +63,29 @@ func HomePageFunc(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "%s", mainPage)
 }
 
+func AboutPageFunc(w http.ResponseWriter, r *http.Request) {
+	AboutPage, err := ioutil.ReadFile("src/static/html/about.html")
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	fmt.Fprintf(w, "%s", AboutPage)
+}
+
+func ContactPageFunc(w http.ResponseWriter, r *http.Request) {
+	ContactPage, err := ioutil.ReadFile("src/static/html/contact.html")
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	fmt.Fprintf(w, "%s", ContactPage)
+}
+
 func main() {
 	http.HandleFunc("/", HomePageFunc)
 	http.HandleFunc("/emailme", sendEmailHandler)
+	http.HandleFunc("/about.html", AboutPageFunc)
+	http.HandleFunc("/contact.html", ContactPageFunc)
 	fs := http.FileServer(http.Dir("src/static"))
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
 	http.ListenAndServe(":8080", nil)
