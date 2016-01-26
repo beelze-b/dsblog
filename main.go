@@ -19,7 +19,7 @@ func ArticleTemplate(w http.ResponseWriter, r *http.Request, a article.Article) 
 
 func articleHandler(w http.ResponseWriter, r *http.Request) {
 	title := r.URL.Path[len("/article/"):]
-	article, err := article.LoadJSONArticle(title)
+	article, err := article.LoadArticleTitle(title)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
@@ -59,7 +59,7 @@ func addCommentHandler(w http.ResponseWriter, r *http.Request) {
 	date := time.Now().String()
 	comment := r.FormValue("comment")
 	// fix this loading
-	art, err := article.LoadJSONArticle(articleUrl[:])
+	art, err := article.LoadArticleTitle(articleUrl[len("/article/") : len(articleUrl)-len(".html")])
 	if err != nil {
 		http.NotFound(w, r)
 		return

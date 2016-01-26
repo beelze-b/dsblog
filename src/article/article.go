@@ -5,8 +5,6 @@ import (
 	"errors"
 	"io/ioutil"
 	"log"
-	"net/url"
-	"strconv"
 	"strings"         //remove blank identifier to remove unused compiler error
 	_ "text/template" //remove blank identifier to remove unused compiler error
 	"time"
@@ -14,9 +12,9 @@ import (
 
 type Article struct {
 	Title    string
+	Url      string
 	Author   string
 	Date     time.Time
-	url      string
 	Tags     []string
 	Content  []byte //content should be template style: see documentation details on golang site
 	Comments []string
@@ -48,7 +46,7 @@ Content:
 Content
 Detail to change as no articles are written yet.
 */
-func LoadJSONArticle(title string) (Article, error) {
+func LoadArticleTitle(title string) (Article, error) {
 	// must first parse title to find file and then create article out of it
 	filePath := "/static/articles/" + strings.ToLower(strings.Replace(title, " ", "_", -1))
 	b, err := ioutil.ReadFile(filePath)
@@ -63,15 +61,6 @@ func LoadJSONArticle(title string) (Article, error) {
 	} else {
 		return Article{}, errors.New("Article not found")
 	}
-}
-
-/*
-Creates a URL version of an article's title. Signatures use date and title for uniqueness in URL.
-The URL is not totally valid, but the handler will enable its use.
-*/
-func (a *Article) ParseTitle() string {
-	date := "/" + strconv.Itoa(a.Date.Year()) + "/" + strconv.Itoa(int(a.Date.Month())) + "/" + strconv.Itoa(a.Date.Day())
-	return url.QueryEscape(date + "/" + a.Title + ".html")
 }
 
 func (a *Article) AddComment(author string, date string, comment string) {
