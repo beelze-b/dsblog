@@ -9,6 +9,7 @@ import (
 	"net/http"
 	"net/mail"
 	"net/smtp"
+	"time"
 )
 
 func ArticleTemplate(w http.ResponseWriter, r *http.Request, a article.Article) {
@@ -43,7 +44,6 @@ func sendEmailHandler(w http.ResponseWriter, r *http.Request) {
 		message += fmt.Sprintf("%s: %s\r\n", k, v)
 	}
 	message += "\r\n" + body
-
 	auth := smtp.PlainAuth("", "nabeelsarwar200@gmail.com", "password", host)
 	err := smtp.SendMail(host+":25", auth, email, []string{"nabeelsarwar200@gmail.com"}, []byte(message))
 	if err != nil {
@@ -51,6 +51,22 @@ func sendEmailHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	http.Redirect(w, r, "/contact.html", http.StatusFound)
+}
+
+func addCommentHandler(w http.ResponseWriter, r *http.Request) {
+	articleUrl := "/fakeurl.html"
+	author := r.FormValue("name")
+	date := time.Now().String()
+	comment := r.FormValue("comment")
+	// fix this loading
+	art, err := article.LoadJSONArticle(articleUrl[:])
+	if err != nil {
+		http.NotFound(w, r)
+		return
+	}
+	(&art).AddComment(author, date, comment)
+	http.Redirect(w, r, articleUrl, http.StatusFound)
+
 }
 
 func HomePageFunc(w http.ResponseWriter, r *http.Request) {

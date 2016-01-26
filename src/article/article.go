@@ -2,6 +2,7 @@ package article
 
 import (
 	"encoding/json"
+	"errors"
 	"io/ioutil"
 	"log"
 	"net/url"
@@ -60,7 +61,7 @@ func LoadJSONArticle(title string) (Article, error) {
 	if err == nil {
 		return article, nil
 	} else {
-		return Article{}, nil
+		return Article{}, errors.New("Article not found")
 	}
 }
 
@@ -68,12 +69,12 @@ func LoadJSONArticle(title string) (Article, error) {
 Creates a URL version of an article's title. Signatures use date and title for uniqueness in URL.
 The URL is not totally valid, but the handler will enable its use.
 */
-func (a *Article) parseTitle() string {
+func (a *Article) ParseTitle() string {
 	date := "/" + strconv.Itoa(a.Date.Year()) + "/" + strconv.Itoa(int(a.Date.Month())) + "/" + strconv.Itoa(a.Date.Day())
 	return url.QueryEscape(date + "/" + a.Title + ".html")
 }
 
-func (a *Article) addComment(author string, date string, comment string) {
+func (a *Article) AddComment(author string, date string, comment string) {
 	var entry = `<li class="comment">
                                 <div class="clearfix">
                                     <h4 class="pull-left">` + author + `</h4>

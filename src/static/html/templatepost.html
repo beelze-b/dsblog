@@ -49,7 +49,7 @@ body {
                         <button type="submit" class="btn btn-default">Submit</button>
                     </form>
                     <ul class="nav navbar-nav">
-                        <li class="active"><a href="/">Home</a></li>
+                        <li><a href="/">Home</a></li>
                         <li><a href="/contact.html">Contact me</a></li>
                         <li><a href="/about.html">About</a></li>
                     </ul>
@@ -86,21 +86,21 @@ body {
                     <div class="well">
 
                         <h4> Comments </h4>
-                        <form role="form" class="clearfix">
+                        <form role="form" class="clearfix" action="/submitcomment">
 
                             <div class="col-md-6 form-group">
                                 <label class="sr-only" for="name">Name</label>
-                                <input type="text" class="form-control" id="name" placeholder="Name">
+                                <input type="text" class="form-control" id="name" name="name" placeholder="Name">
                             </div>
 
                             <div class="col-md-6 form-group">
                                 <label class="sr-only" for="email">Email</label>
-                                <input type="email" class="form-control" id="email" placeholder="Email">
+                                <input type="email" class="form-control" id="email" name="email" placeholder="Email">
                             </div>
 
                             <div class="col-md-12 form-group">
                                 <label class="sr-only" for="email">Comment</label>
-                                <textarea class="form-control" id="comment" placeholder="Comment"></textarea>
+                                <textarea class="form-control" id="comment" name="comment" placeholder="Comment"></textarea>
                             </div>
 
                             <div class="col-md-12 form-group text-right">
