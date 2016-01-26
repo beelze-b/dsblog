@@ -17,6 +17,10 @@ type Aggregator struct {
 func Aggregate() Aggregator {
 	files, err := ioutil.ReadDir("src/static/")
 
+	var articles []Article
+	var TitleToUrl map[string]string
+	var UrlToTitle map[string]string
+
 	if err != nil {
 		log.Panic(err)
 	}
