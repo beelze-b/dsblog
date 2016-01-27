@@ -27,7 +27,7 @@ func SaveJSONArticle(a Article) {
 		return
 	}
 	title := strings.ToLower(strings.Replace(a.Title, " ", "_", -1))
-	filePath := "/static/articles" + title
+	filePath := "../static/articles/" + title
 	// 0644 means overwrite
 	ioutil.WriteFile(filePath, b, 0644)
 	return
@@ -75,3 +75,17 @@ func (a *Article) AddComment(author string, date string, comment string) {
                             </li>`
 	a.Comments = append(a.Comments, entry)
 }
+
+/**
+func main() {
+	Title := "HEllo"
+	Url := "/article/test.html"
+	Author := "Nabeel"
+	Tags := []string{"pew", "miracle"}
+	Date := time.Now()
+	Content := []byte("This is the content")
+	Comments := []string{"comment 1", "comment 2"}
+	article := Article{Title, Url, Author, Date, Tags, Content, Comments}
+	SaveJSONArticle(article)
+}
+*/

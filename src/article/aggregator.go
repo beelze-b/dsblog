@@ -25,7 +25,7 @@ func Aggregate() Aggregator {
 		log.Panic(err)
 	}
 
-	for i, v := range files {
+	for _, v := range files {
 		// load the json from the file
 		// these things are file values
 		if v.IsDir() {
@@ -42,7 +42,9 @@ func Aggregate() Aggregator {
 		if err != nil {
 			log.Panic(err)
 		}
-
+		articles = append(articles, art)
+		TitleToUrl[art.Title] = art.Url
+		UrlToTitle[art.Url] = art.Title
 	}
-
+	return Aggregator{articles, TitleToUrl, UrlToTitle}
 }
