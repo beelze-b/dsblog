@@ -1,6 +1,7 @@
 package article
 
 import (
+	"bytes"
 	"encoding/json"
 	"io/ioutil"
 	"log"
@@ -47,4 +48,42 @@ func Aggregate() Aggregator {
 		UrlToTitle[art.Url] = art.Title
 	}
 	return Aggregator{articles, TitleToUrl, UrlToTitle}
+}
+
+func (agg Aggregator) DisplayArticle(a Article) string {
+	var url = agg.TitleToUrl[a.Title]
+	var display = `<article> <h2> <a href="singlepost.html"> DotA Test </a> </h2>
+                        <div class="row">
+                            <div class="group1 col-sm-6 col-md-6">
+                                <span class="glyphicon glyphicon-folder-open"></span>  <a href="#">Signs</a>
+                                <span class="glyphicon glyphicon-bookmark"></span> <a href="#">Aries</a>,
+                                <a href="#">Fire</a>, <a href="#">Mars</a>
+                            </div>
+                            <div class="group2 col-sm-6 col-md-6">
+                                <span class="glyphicon glyphicon-pencil"></span> <a href="` + url + `.html#comments">20 Comments</a>
+                                <span class="glyphicon glyphicon-time"></span> August 24, 2013 9:00 PM
+                            </div>
+                        </div>
+
+                        <hr>
+
+                        <img src="http://placehold.it/900x300" class="img-responsive">
+
+                        <br />
+                        <p> Template stuff goes here </p>
+                        <p class="text-right">
+                        <a href="` + url + `.html" class="text-right">
+                            continue reading...
+                        </a>
+                        </p>
+                        <hr></article>`
+	return display
+}
+
+func (agg Aggregator) DisplayArticleAll() string {
+	var buffer bytes.Buffer
+	for _, value := range agg.articles {
+		buffer.WriteString(agg.DisplayArticle(value))
+	}
+	return buffer.String()
 }

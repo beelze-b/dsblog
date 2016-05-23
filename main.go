@@ -12,6 +12,8 @@ import (
 	"time"
 )
 
+var agg = article.Aggregate()
+
 func ArticleTemplate(w http.ResponseWriter, r *http.Request, a article.Article) {
 	t, _ := template.ParseFiles("src/static/html/templatepost.html")
 	t.Execute(w, a)
@@ -71,12 +73,12 @@ func addCommentHandler(w http.ResponseWriter, r *http.Request) {
 
 func HomePageFunc(w http.ResponseWriter, r *http.Request) {
 	// load main page and print it
-	mainPage, err := ioutil.ReadFile("src/static/html/mainpage.html")
+	t, err := template.ParseFiles("src/static/html/mainpage.html")
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-	fmt.Fprintf(w, "%s", mainPage)
+	t.Execute(w, agg)
 }
 
 func AboutPageFunc(w http.ResponseWriter, r *http.Request) {
@@ -98,10 +100,21 @@ func ContactPageFunc(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
+	Title := "HEllo"
+	Url := "/article/test.html"
+	Author := "Nabeel"
+	Tags := []string{"pew", "miracle"}
+	Date := time.Now()
+	Content := []byte("This is the content")
+	Comments := []string{"comment 1", "comment 2"}
+	article1 := article.Article{Title, Url, Author, Date, Tags, Content, Comments}
+	article.SaveJSONArticle(article1)
+
 	http.HandleFunc("/", HomePageFunc)
 	http.HandleFunc("/emailme", sendEmailHandler)
 	http.HandleFunc("/about.html", AboutPageFunc)
 	http.HandleFunc("/contact.html", ContactPageFunc)
+	http.HandleFunc("/article", articleHandler)
 	fs := http.FileServer(http.Dir("src/static"))
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
 	http.ListenAndServe(":8080", nil)

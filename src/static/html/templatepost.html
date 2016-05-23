@@ -60,8 +60,9 @@ body {
         <div id="body" class="container">
             <div class="row">
                 <div class="col-md-8">
-                    <article> 
-                        <h2> <a href="/article/{{.url}}.html"> {{.Title}}</a> </h2>
+                    <article>
+                        <h2> <a href="/article/{{.Url}}.html"> {{.Title}}</a> </h2>
+
                         <div class="row">
                             <div class="group2 col-sm-6 col-md-6">
                                 <span class="glyphicon glyphicon-pencil"></span> <a href="/article/{{.url}}.html#comments">20 Comments</a>
@@ -71,8 +72,8 @@ body {
 
                         <hr>
                         <br />
-                        <p> Template stuff goes here </p>
-                        <hr>
+                        <p> {{.Content}} </p>
+                        <hr> 
                     </article>
 
                     <!-- those back and forward to time travel in the blog -->

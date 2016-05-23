@@ -48,7 +48,7 @@ Detail to change as no articles are written yet.
 */
 func LoadArticleTitle(title string) (Article, error) {
 	// must first parse title to find file and then create article out of it
-	filePath := "/static/articles/" + strings.ToLower(strings.Replace(title, " ", "_", -1))
+	filePath := "../static/articles/" + strings.ToLower(strings.Replace(title, " ", "_", -1))
 	b, err := ioutil.ReadFile(filePath)
 	if err != nil {
 		return Article{}, err
