@@ -5,8 +5,7 @@ import (
 	"errors"
 	"io/ioutil"
 	"log"
-	"strings"         //remove blank identifier to remove unused compiler error
-	_ "text/template" //remove blank identifier to remove unused compiler error
+	"strings" //remove blank identifier to remove unused compiler error
 	"time"
 )
 
