@@ -2,7 +2,7 @@
 <html>
 
     <head>
-        <link rel="stylesheet" type="text/css" href="static/css/mainpage.css">
+        <link rel="stylesheet" type="text/css" href="../static/css/mainpage.css">
 
         <!--Font information goes here-->
         <link href='http://fonts.googleapis.com/css?family=Roboto+Slab' rel='stylesheet' type='text/css'>
@@ -13,9 +13,9 @@
         <script src="//code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
 
         <!-- Bootstrap -->
-        <link rel="stylesheet" href="static/css/bootstrap.min.css">
-        <link rel="stylesheet" href="static/css/bootstrap-theme.min.css">
-        <script src="static/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="../static/css/bootstrap.min.css">
+        <link rel="stylesheet" href="../static/css/bootstrap-theme.min.css">
+        <script src="../static/js/bootstrap.min.js"></script>
 
         <style type="text/css">
 body {
@@ -61,12 +61,13 @@ body {
             <div class="row">
                 <div class="col-md-8">
                     <article>
-                        <h2> <a href="/article/{{.Url}}.html"> {{.Title}}</a> </h2>
+                        <h2> <a href="/article/{{.Url}}"> {{.Title}}</a> </h2>
 
                         <div class="row">
                             <div class="group2 col-sm-6 col-md-6">
-                                <span class="glyphicon glyphicon-pencil"></span> <a href="/article/{{.url}}#comments">20 Comments</a>
-                                <span class="glyphicon glyphicon-time"></span> August 24, 2013 9:00 PM
+                                <span class="glyphicon glyphicon-pencil"></span> <a href="/article/{{.Url}}#comments">{{len .Comments}}
+                                    Comments</a>
+                                <span class="glyphicon glyphicon-time"></span> {{.Date}}
                             </div>
                         </div>
 
@@ -110,16 +111,17 @@ body {
                         </form>
                         <!-- comments go here -->
                         <ul id="comments" class="comments">
+                            {{range $comment := .Comments}}
                             <li class="comment">
                                 <div class="clearfix">
-                                    <h4 class="pull-left">John</h4>
-                                    <p class="pull-right">9:41 PM on August 24, 2013</p>
+                                    <h4 class="pull-left">{{$comment.Author}}</h4>
+                                    <p class="pull-right">{{$comment.Date}}</p>
                                 </div>
                                 <p>
-                                <em>I don't believe in astrology but still your writing style is really great!</em>
+                                <em>{{$comment.Content}}</em>
                                 </p>
                             </li>
-                            {{range .Comments}}
+                            {{end}}
                         </ul>
 
                     </div>
@@ -161,10 +163,7 @@ body {
                             </ul>
                         </div>
                     </div>
-
-
                 </div>
-
             </div>
         </div>
 

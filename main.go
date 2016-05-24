@@ -15,7 +15,11 @@ import (
 var agg = article.Aggregate()
 
 func ArticleTemplate(w http.ResponseWriter, r *http.Request, a article.Article) {
-	t, _ := template.ParseFiles("src/static/html/templatepost.html")
+	t, err := template.ParseFiles("src/static/html/templatepost.html")
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
 	t.Execute(w, a)
 }
 
@@ -100,11 +104,24 @@ func ContactPageFunc(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
+	/*
+		Title := "Hello"
+		Url := "hello.html"
+		Author := "Nabeel"
+		Tags := []string{"pew", "miracle"}
+		Date := time.Now()
+		Content := "This is the content"
+		Comments := []article.Comment{article.Comment{"John", "October 15, 2016", "Good stuff"},
+			article.Comment{"Michael", "November 15, 2016", "Bad stuff"}}
+		art := article.Article{Title, Url, Author, Date, Tags, Content, Comments}
+		article.SaveJSONArticle(art)
+	*/
+
 	http.HandleFunc("/", HomePageFunc)
 	http.HandleFunc("/emailme", sendEmailHandler)
 	http.HandleFunc("/about.html", AboutPageFunc)
 	http.HandleFunc("/contact.html", ContactPageFunc)
-	http.HandleFunc("/article", articleHandler)
+	http.HandleFunc("/article/", articleHandler)
 	fs := http.FileServer(http.Dir("src/static"))
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
 	http.ListenAndServe(":8080", nil)

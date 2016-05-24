@@ -9,14 +9,19 @@ import (
 	"time"
 )
 
+type Comment struct {
+	Author  string
+	Date    string
+	Content string //content should be template style: see documentation details on golang site
+}
 type Article struct {
 	Title    string
 	Url      string
 	Author   string
 	Date     time.Time
 	Tags     []string
-	Content  []byte //content should be template style: see documentation details on golang site
-	Comments []string
+	Content  string //content should be template style: see documentation details on golang site
+	Comments []Comment
 }
 
 func SaveJSONArticle(a Article) {
@@ -25,8 +30,8 @@ func SaveJSONArticle(a Article) {
 		log.Fatal(err)
 		return
 	}
-	title := strings.ToLower(strings.Replace(a.Title, " ", "_", -1))
-	filePath := "../static/articles/" + title
+	title := strings.ToLower(strings.Replace(a.Title, " ", "_", -1)) + ".html"
+	filePath := "src/static/articles/" + title
 	// 0644 means overwrite
 	ioutil.WriteFile(filePath, b, 0644)
 	return
@@ -47,7 +52,7 @@ Detail to change as no articles are written yet.
 */
 func LoadArticleTitle(title string) (Article, error) {
 	// must first parse title to find file and then create article out of it
-	filePath := "../static/articles/" + strings.ToLower(strings.Replace(title, " ", "_", -1))
+	filePath := "src/static/articles/" + strings.ToLower(strings.Replace(title, " ", "_", -1))
 	b, err := ioutil.ReadFile(filePath)
 	if err != nil {
 		return Article{}, err
@@ -63,26 +68,18 @@ func LoadArticleTitle(title string) (Article, error) {
 }
 
 func (a *Article) AddComment(author string, date string, comment string) {
-	var entry = `<li class="comment">
-                                <div class="clearfix">
-                                    <h4 class="pull-left">` + author + `</h4>
-                                    <p class="pull-right">` + date + `</p>
-                                </div>
-                                <p>
-                                <em>` + comment + `</em>
-                                </p>
-                            </li>`
+	var entry = Comment{author, date, comment}
 	a.Comments = append(a.Comments, entry)
 }
 
 /**
 func main() {
-	Title := "HEllo"
-	Url := "/article/test.html"
+	Title := "Hello"
+	Url := "/article/hello.html"
 	Author := "Nabeel"
 	Tags := []string{"pew", "miracle"}
 	Date := time.Now()
-	Content := []byte("This is the content")
+	Content := "This is the content"
 	Comments := []string{"comment 1", "comment 2"}
 	article := Article{Title, Url, Author, Date, Tags, Content, Comments}
 	SaveJSONArticle(article)

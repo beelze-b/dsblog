@@ -7,6 +7,7 @@ import (
 	"html/template"
 	"io/ioutil"
 	"log"
+	"strconv"
 )
 
 type Aggregator struct {
@@ -54,7 +55,7 @@ func Aggregate() Aggregator {
 
 func (agg Aggregator) DisplayArticle(a Article) template.HTML {
 	var url = agg.TitleToUrl[a.Title]
-	var display = template.HTML(`<article><h2> <a href="singlepost.html"> DotA Test </a> </h2>
+	var display = template.HTML(`<article><h2> <a href="/article/` + url + `"> DotA Test </a> </h2>
                         <div class="row">
                             <div class="group1 col-sm-6 col-md-6">
                                 <span class="glyphicon glyphicon-folder-open"></span>  <a href="#">Signs</a>
@@ -62,8 +63,9 @@ func (agg Aggregator) DisplayArticle(a Article) template.HTML {
                                 <a href="#">Fire</a>, <a href="#">Mars</a>
                             </div>
                             <div class="group2 col-sm-6 col-md-6">
-                                <span class="glyphicon glyphicon-pencil"></span> <a href="` + url + `.html#comments">20 Comments</a>
-                                <span class="glyphicon glyphicon-time"></span> August 24, 2013 9:00 PM
+                                <span class="glyphicon glyphicon-pencil"></span> <a href="/article/` + url + `#comments">` +
+		strconv.Itoa(len(a.Comments)) + ` Comments</a>  
+								<span class="glyphicon glyphicon-time"></span>` + a.Date.String() + `
                             </div>
                         </div>
                         <hr>
@@ -71,9 +73,9 @@ func (agg Aggregator) DisplayArticle(a Article) template.HTML {
                         <img src="http://placehold.it/900x300" class="img-responsive">
 
                         <br />
-                        <p> Template stuff goes here </p>
+                        <p>` + a.Content + `
                         <p class="text-right">
-                        <a href="` + url + `" class="text-right">
+                        <a href="/article/` + url + `"class="text-right">
                             continue reading...
                         </a>
                         </p>
