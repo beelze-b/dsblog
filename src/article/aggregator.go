@@ -55,7 +55,7 @@ func Aggregate() Aggregator {
 
 func (agg Aggregator) DisplayArticle(a Article) template.HTML {
 	var url = agg.TitleToUrl[a.Title]
-	var display = template.HTML(`<article><h2> <a href="/article/` + url + `"> DotA Test </a> </h2>
+	var display = template.HTML(`<article><h2> <a href="/article/` + url + `">` + a.Title + `</a> </h4>
                         <div class="row">
                             <div class="group1 col-sm-6 col-md-6">
                                 <span class="glyphicon glyphicon-folder-open"></span>  <a href="#">Signs</a>
