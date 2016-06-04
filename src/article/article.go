@@ -15,13 +15,14 @@ type Comment struct {
 	Content string //content should be template style: see documentation details on golang site
 }
 type Article struct {
-	Title    string
-	Url      string
-	Author   string
-	Date     time.Time
-	Tags     []string
-	Content  string //content should be template style: see documentation details on golang site
-	Comments []Comment
+	Title          string
+	Url            string
+	Author         string
+	Date           time.Time
+	Tags           []string
+	Content        string //content should be template style: see documentation details on golang site
+	LimitedContent string
+	Comments       []Comment
 }
 
 func SaveJSONArticle(a Article) {

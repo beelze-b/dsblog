@@ -70,10 +70,8 @@ func (agg Aggregator) DisplayArticle(a Article) template.HTML {
                         </div>
                         <hr>
 
-                        <img src="http://placehold.it/900x300" class="img-responsive">
-
                         <br />
-                        <p>` + a.Content + `
+                        <p>` + a.LimitedContent + `</p>
                         <p class="text-right">
                         <a href="/article/` + url + `"class="text-right">
                             continue reading...

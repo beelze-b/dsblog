@@ -104,18 +104,18 @@ func ContactPageFunc(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	/*
-		Title := "Hello"
-		Url := "hello.html"
-		Author := "Nabeel"
-		Tags := []string{"pew", "miracle"}
-		Date := time.Now()
-		Content := "This is the content"
-		Comments := []article.Comment{article.Comment{"John", "October 15, 2016", "Good stuff"},
-			article.Comment{"Michael", "November 15, 2016", "Bad stuff"}}
-		art := article.Article{Title, Url, Author, Date, Tags, Content, Comments}
-		article.SaveJSONArticle(art)
-	*/
+
+	Title := "Hello"
+	Url := "hello.html"
+	Author := "Nabeel"
+	Tags := []string{"pew", "miracle"}
+	Date := time.Now()
+	LimitedContent := "Limited Content"
+	Content := "This is the content full"
+	Comments := []article.Comment{article.Comment{"John", "October 15, 2016", "Good stuff"},
+		article.Comment{"Michael", "November 15, 2016", "Bad stuff"}}
+	art := article.Article{Title, Url, Author, Date, Tags, Content, LimitedContent, Comments}
+	article.SaveJSONArticle(art)
 
 	http.HandleFunc("/", HomePageFunc)
 	http.HandleFunc("/emailme", sendEmailHandler)

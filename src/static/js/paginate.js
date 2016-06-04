@@ -1,36 +1,38 @@
-var listElement = $('#articlesPage');
-var perPage = 1; 
-var numItems = listElement.children().size();
-var numPages = Math.ceil(numItems/perPage);
+$(document).ready(function () {
+    var listElement = $('#articlesPage');
+    var perPage = 2; 
+    var numItems = listElement.children().size();
+    var numPages = Math.ceil(numItems/perPage);
 
-$('.pager').data("curr",0);
+    $('.pager').data("curr",0);
 
-var curr = 0;
-while(numPages > curr){
-  $('<li><a href="#" class="page_link">'+(curr+1)+'</a></li>').appendTo('.pager');
-  curr++;
-}
+    var curr = 0;
+    while(numPages > curr){
+        $('<li><a href="#" class="page_link">'+(curr+1)+'</a></li>').appendTo('.pager');
+        curr++;
+    }
 
-$('.pager .page_link:first').addClass('active');
+    $('.pager .page_link:first').addClass('active');
 
-listElement.children().css('display', 'none');
-listElement.children().slice(0, perPage).css('display', 'block');
+    listElement.children().css('display', 'none');
+    listElement.children().slice(0, perPage).css('display', 'block');
 
-$('.pager li a').click(function(){
-  var clickedPage = $(this).html().valueOf() - 1;
-  goTo(clickedPage,perPage);
+    $('.pager li a').click(function(){
+        var clickedPage = $(this).html().valueOf() - 1;
+        goTo(clickedPage,perPage);
+    });
+
+    function previous(){
+        var goToPage = parseInt($('.pager').data("curr")) - 1;
+        if($('.active').prev('.page_link').length==true){
+            goTo(goToPage);
+        }
+    }
+
+    function next(){
+        goToPage = parseInt($('.pager').data("curr")) + 1;
+        if($('.active_page').next('.page_link').length==true){
+            goTo(goToPage);
+        }
+    }
 });
-
-function previous(){
-  var goToPage = parseInt($('.pager').data("curr")) - 1;
-  if($('.active').prev('.page_link').length==true){
-    goTo(goToPage);
-  }
-}
-
-function next(){
-  goToPage = parseInt($('.pager').data("curr")) + 1;
-  if($('.active_page').next('.page_link').length==true){
-    goTo(goToPage);
-  }
-}
