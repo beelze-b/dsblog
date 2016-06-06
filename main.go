@@ -59,6 +59,18 @@ func sendEmailHandler(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/contact.html", http.StatusFound)
 }
 
+func SearchBarHandler(w http.ResponseWriter, r *http.Request) {
+	searchTerms := r.FormValue("searchbar")
+	searchResults := article.SearchResults(searchTerms)
+	t, err := template.ParseFiles("src/static/html/search_page.html")
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	t.Execute(w, searchResults)
+
+}
+
 func addCommentHandler(w http.ResponseWriter, r *http.Request) {
 	articleUrl := "/fakeurl.html"
 	author := r.FormValue("name")
@@ -119,6 +131,7 @@ func main() {
 
 	http.HandleFunc("/", HomePageFunc)
 	http.HandleFunc("/emailme", sendEmailHandler)
+	http.HandleFunc("/search", SearchBarHandler)
 	http.HandleFunc("/about.html", AboutPageFunc)
 	http.HandleFunc("/contact.html", ContactPageFunc)
 	http.HandleFunc("/article/", articleHandler)
