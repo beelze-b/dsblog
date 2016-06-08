@@ -68,6 +68,21 @@ func LoadArticleTitle(title string) (Article, error) {
 	}
 }
 
+func LoadArticleFilePath(filePath string) (Article, error) {
+	// must first parse title to find file and then create article out of it
+	b, err := ioutil.ReadFile(filePath)
+	if err != nil {
+		return Article{}, err
+	}
+	var article Article
+	err = json.Unmarshal(b, &article)
+
+	if err == nil {
+		return article, nil
+	} else {
+		return Article{}, errors.New("Article not found")
+	}
+}
 func (a *Article) AddComment(author string, date string, comment string) {
 	var entry = Comment{author, date, comment}
 	a.Comments = append(a.Comments, entry)
