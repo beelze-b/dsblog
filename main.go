@@ -13,14 +13,14 @@ import (
 )
 
 var agg = article.Aggregate()
+var templates = template.Must(template.ParseFiles(
+	"src/static/html/templatepost.html", "src/static/html/search_page.html", "src/static/html/mainpage.html"))
 
 func ArticleTemplate(w http.ResponseWriter, r *http.Request, a article.Article) {
-	t, err := template.ParseFiles("src/static/html/templatepost.html")
+	err := templates.ExecuteTemplate(w, "src/static/html/templatepost.html", a)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
 	}
-	t.Execute(w, a)
 }
 
 func articleHandler(w http.ResponseWriter, r *http.Request) {
@@ -61,14 +61,11 @@ func sendEmailHandler(w http.ResponseWriter, r *http.Request) {
 
 func SearchBarHandler(w http.ResponseWriter, r *http.Request) {
 	searchTerms := r.FormValue("searchbar")
-	searchResults := article.SearchResults(searchTerms)
-	t, err := template.ParseFiles("src/static/html/search_page.html")
+	searchResults := article.NewSearchResults(searchTerms)
+	err := templates.ExecuteTemplate(w, "src/static/html/search_page.html", searchResults)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
 	}
-	t.Execute(w, searchResults)
-
 }
 
 func addCommentHandler(w http.ResponseWriter, r *http.Request) {
@@ -89,12 +86,10 @@ func addCommentHandler(w http.ResponseWriter, r *http.Request) {
 
 func HomePageFunc(w http.ResponseWriter, r *http.Request) {
 	// load main page and print it
-	t, err := template.ParseFiles("src/static/html/mainpage.html")
+	err := templates.ExecuteTemplate(w, "src/static/html/mainpage.html", agg)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
 	}
-	t.Execute(w, agg)
 }
 
 func AboutPageFunc(w http.ResponseWriter, r *http.Request) {
