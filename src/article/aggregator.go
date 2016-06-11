@@ -53,6 +53,10 @@ func Aggregate() Aggregator {
 	return Aggregator{articles, TitleToUrl, UrlToTitle}
 }
 
+/*
+Need to use template.HTML to escape properly.
+This returns a short version of each article ready to be displayed
+*/
 func (agg Aggregator) DisplayArticle(a Article) template.HTML {
 	var url = agg.TitleToUrl[a.Title]
 	var display = template.HTML(`<article><h2> <a href="/article/` + url + `">` + a.Title + `</a> </h4>
