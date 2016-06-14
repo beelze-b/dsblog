@@ -30,7 +30,7 @@ func UseMatcher(matcher *search.Matcher, searchTerm string, fileName string) boo
 }
 
 func NewSearchResults(searchTermsString string) SearchResults {
-	var articleDirectory string = filepath.Dir("src/static/article/")
+	var articleDirectory string = filepath.Dir("src/static/articles/")
 	articlesArray := make([]Article, 10)
 
 	if articleDirectory == "." {
