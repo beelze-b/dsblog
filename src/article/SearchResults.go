@@ -46,9 +46,10 @@ func NewSearchResults(searchTermsString string) SearchResults {
 	}
 
 	matcher := search.New(language.English)
+	fmt.Println(files)
 	for _, file := range files {
+		fmt.Println(file.Name())
 		for _, searchTerm := range searchTerms {
-			fmt.Println(file.Name())
 			validArticle := UseMatcher(matcher, searchTerm, file.Name())
 			if validArticle {
 				article, err := LoadArticleFilePath("src/static/articles/" + file.Name())
