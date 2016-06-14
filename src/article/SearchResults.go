@@ -20,8 +20,8 @@ type SearchResults struct {
 Takes a matcher and a search term and sees if that search term is in any of the matches
 */
 func UseMatcher(matcher *search.Matcher, searchTerm string, fileName string) bool {
-	fileContent, err := ioutil.ReadFile(fileName)
-
+	// need to append the prefix of the file name locations  as file.Name() does not return its location
+	fileContent, err := ioutil.ReadFile("src/static/articles/" + fileName)
 	if err != nil {
 		log.Panic(err)
 	}
@@ -49,7 +49,7 @@ func NewSearchResults(searchTermsString string) SearchResults {
 		for _, searchTerm := range searchTerms {
 			validArticle := UseMatcher(matcher, searchTerm, file.Name())
 			if validArticle {
-				article, err := LoadArticleFilePath(file.Name())
+				article, err := LoadArticleFilePath("src/static/articles/" + file.Name())
 				if err != nil {
 					log.Panic(err)
 				}
@@ -96,6 +96,10 @@ func DisplaySearchResult(a Article) template.HTML {
 
 func (results SearchResults) DisplaySearchResults() template.HTML {
 	var buffer bytes.Buffer
+	if len(results.RelevantArticles) == 0 {
+		return template.HTML("<p>No relevant articles found.</p>")
+	}
+
 	for _, value := range results.RelevantArticles {
 		buffer.WriteString(string(DisplaySearchResult(value)))
 	}
