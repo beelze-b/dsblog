@@ -19,7 +19,6 @@ var templates = template.Must(template.ParseFiles(
 func ArticleTemplate(w http.ResponseWriter, r *http.Request, a article.Article) {
 	err := templates.ExecuteTemplate(w, "template_post", a)
 	if err != nil {
-		fmt.Println("In ArticleTemplate error")
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
 }
@@ -71,19 +70,19 @@ func SearchBarHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func addCommentHandler(w http.ResponseWriter, r *http.Request) {
-	articleUrl := "/fakeurl.html"
+func AddCommentHandler(w http.ResponseWriter, r *http.Request) {
+	articleUrl := r.URL.Path[len("/submitcomment/"):]
 	author := r.FormValue("name")
 	date := time.Now().String()
 	comment := r.FormValue("comment")
 	// fix this loading
-	art, err := article.LoadArticleTitle(articleUrl[len("/article/") : len(articleUrl)-len(".html")])
+	art, err := article.LoadArticleTitle(articleUrl)
 	if err != nil {
 		http.NotFound(w, r)
 		return
 	}
 	(&art).AddComment(author, date, comment)
-	http.Redirect(w, r, articleUrl, http.StatusFound)
+	http.Redirect(w, r, "/article/"+articleUrl, http.StatusFound)
 
 }
 
@@ -114,18 +113,19 @@ func ContactPageFunc(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-
-	Title := "Hello"
-	Url := "hello.html"
-	Author := "Nabeel"
-	Tags := []string{"pew", "miracle"}
-	Date := time.Now()
-	LimitedContent := "Limited Content"
-	Content := template.HTML("This is the content full")
-	Comments := []article.Comment{article.Comment{"John", "October 15, 2016", "Good stuff"},
-		article.Comment{"Michael", "November 15, 2016", "Bad stuff"}}
-	art := article.Article{Title, Url, Author, Date, Tags, Content, LimitedContent, Comments}
-	article.SaveJSONArticle(art)
+	/*
+		Title := "Hello"
+		Url := "hello.html"
+		Author := "Nabeel"
+		Tags := []string{"pew", "miracle"}
+		Date := time.Now()
+		LimitedContent := "Limited Content"
+		Content := template.HTML("This is the content full")
+		Comments := []article.Comment{article.Comment{"John", "October 15, 2016", "Good stuff"},
+			article.Comment{"Michael", "November 15, 2016", "Bad stuff"}}
+		art := article.Article{Title, Url, Author, Date, Tags, Content, LimitedContent, Comments}
+		article.SaveJSONArticle(art)
+	*/
 
 	http.HandleFunc("/", HomePageFunc)
 	http.HandleFunc("/emailme", sendEmailHandler)
@@ -133,6 +133,7 @@ func main() {
 	http.HandleFunc("/about.html", AboutPageFunc)
 	http.HandleFunc("/contact.html", ContactPageFunc)
 	http.HandleFunc("/article/", articleHandler)
+	http.HandleFunc("/submitcomment/", AddCommentHandler)
 	fs := http.FileServer(http.Dir("src/static"))
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
 	http.ListenAndServe(":8080", nil)
