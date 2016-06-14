@@ -63,6 +63,8 @@ func sendEmailHandler(w http.ResponseWriter, r *http.Request) {
 func SearchBarHandler(w http.ResponseWriter, r *http.Request) {
 	searchTerms := r.FormValue("searchbar")
 	searchResults := article.NewSearchResults(searchTerms)
+	fmt.Println(searchTerms)
+	fmt.Println(searchResults)
 	err := templates.ExecuteTemplate(w, "search_page", searchResults)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)

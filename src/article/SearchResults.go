@@ -2,6 +2,7 @@ package article
 
 import (
 	"bytes"
+	"fmt"
 	"golang.org/x/text/language"
 	"golang.org/x/text/search"
 	"html/template"
@@ -47,6 +48,7 @@ func NewSearchResults(searchTermsString string) SearchResults {
 	matcher := search.New(language.English)
 	for _, file := range files {
 		for _, searchTerm := range searchTerms {
+			fmt.Println(file.Name())
 			validArticle := UseMatcher(matcher, searchTerm, file.Name())
 			if validArticle {
 				article, err := LoadArticleFilePath("src/static/articles/" + file.Name())
@@ -67,7 +69,7 @@ Very similar to the use in aggregator.go
 */
 func DisplaySearchResult(a Article) template.HTML {
 	var url = a.Url
-	var display = template.HTML(`<article><h2> <a href="/article/` + url + `">` + a.Title + `</a> </h4>
+	var display = template.HTML(`<div> <article><h2> <a href="/article/` + url + `">` + a.Title + `</a> </h4>
                         <div class="row">
                             <div class="group1 col-sm-6 col-md-6">
                                 <span class="glyphicon glyphicon-folder-open"></span>  <a href="#">Signs</a>
@@ -89,7 +91,7 @@ func DisplaySearchResult(a Article) template.HTML {
                             continue reading...
                         </a>
                         </p>
-                        </hr></article>`)
+                        </hr></article> </div>`)
 	return display
 
 }
