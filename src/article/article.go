@@ -87,6 +87,7 @@ func LoadArticleFilePath(filePath string) (Article, error) {
 func (a *Article) AddComment(author string, date string, comment string) {
 	var entry = Comment{author, date, comment}
 	a.Comments = append(a.Comments, entry)
+	SaveJSONArticle(*a)
 }
 
 /**
