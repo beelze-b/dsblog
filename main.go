@@ -17,8 +17,9 @@ var templates = template.Must(template.ParseFiles(
 	"src/static/html/templatepost.html", "src/static/html/search_page.html", "src/static/html/mainpage.html"))
 
 func ArticleTemplate(w http.ResponseWriter, r *http.Request, a article.Article) {
-	err := templates.ExecuteTemplate(w, "src/static/html/templatepost.html", a)
+	err := templates.ExecuteTemplate(w, "template_post", a)
 	if err != nil {
+		fmt.Println("In ArticleTemplate error")
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
 }
@@ -62,7 +63,7 @@ func sendEmailHandler(w http.ResponseWriter, r *http.Request) {
 func SearchBarHandler(w http.ResponseWriter, r *http.Request) {
 	searchTerms := r.FormValue("searchbar")
 	searchResults := article.NewSearchResults(searchTerms)
-	err := templates.ExecuteTemplate(w, "src/static/html/search_page.html", searchResults)
+	err := templates.ExecuteTemplate(w, "search_page", searchResults)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
@@ -86,7 +87,7 @@ func addCommentHandler(w http.ResponseWriter, r *http.Request) {
 
 func HomePageFunc(w http.ResponseWriter, r *http.Request) {
 	// load main page and print it
-	err := templates.ExecuteTemplate(w, "src/static/html/mainpage.html", agg)
+	err := templates.ExecuteTemplate(w, "main_page", agg)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
@@ -118,7 +119,7 @@ func main() {
 	Tags := []string{"pew", "miracle"}
 	Date := time.Now()
 	LimitedContent := "Limited Content"
-	Content := "This is the content full"
+	Content := template.HTML("This is the content full")
 	Comments := []article.Comment{article.Comment{"John", "October 15, 2016", "Good stuff"},
 		article.Comment{"Michael", "November 15, 2016", "Bad stuff"}}
 	art := article.Article{Title, Url, Author, Date, Tags, Content, LimitedContent, Comments}
