@@ -3,6 +3,7 @@ package article
 import (
 	"encoding/json"
 	"errors"
+	"html/template"
 	"io/ioutil"
 	"log"
 	"strings" //remove blank identifier to remove unused compiler error
@@ -20,8 +21,8 @@ type Article struct {
 	Author         string
 	Date           time.Time
 	Tags           []string
-	Content        string //content should be template style: see documentation details on golang site
-	LimitedContent string
+	Content        template.HTML //content should be template style: see documentation details on golang site
+	LimitedContent string        // does not need to be type template.HTML because SearchResults and Aggregator Unescape
 	Comments       []Comment
 }
 
