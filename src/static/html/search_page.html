@@ -1,3 +1,4 @@
+{{define "search_page"}}
 <!DOCTYPE html>
 <html>
 
@@ -18,7 +19,7 @@
         <script src="static/js/bootstrap.min.js"></script>
 
         <!-- Pagination Script -->
-        <script src="static/js/paginateSearch.js" type="text/javascript"></script>
+        <script src="static/js/paginate_search.js" type="text/javascript"></script>
 
 
         <style type="text/css">
@@ -65,7 +66,7 @@ body {
             <div class="row">
                 <div class="col-md-8">
                     <h1> Recent posts </h1>
-                    <div id="articlesPage">
+                    <div id="search_results">
                         {{.DisplaySearchResults}}
                     </div>
 
@@ -124,3 +125,4 @@ body {
         </footer>
     </body>
 </html>
+{{end}}
