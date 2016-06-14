@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    var listElement = $('#articlesPage');
+    var listElement = $('#search_results');
     var perPage = 2; 
     var numItems = listElement.children().size();
     var numPages = Math.ceil(numItems/perPage);
@@ -35,7 +35,6 @@ $(document).ready(function () {
             goTo(goToPage);
         }
     }
-
     function goTo(page){
         var startAt = page * perPage,
         endOn = startAt + perPage;
