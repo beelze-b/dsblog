@@ -8,6 +8,7 @@ import (
 	"io/ioutil"
 	"log"
 	"strconv"
+	"strings"
 )
 
 type Aggregator struct {
@@ -63,12 +64,11 @@ func (agg Aggregator) DisplayArticle(a Article) template.HTML {
 	var url = agg.TitleToUrl[a.Title]
 	var display = template.HTML(`<div> <article><h2> <a href="/article/` + url + `">` + a.Title + `</a> </h4>
                         <div class="row">
-                            <div class="group1 col-sm-6 col-md-6">
-                                <span class="glyphicon glyphicon-folder-open"></span>  <a href="#">Signs</a>
-                                <span class="glyphicon glyphicon-bookmark"></span> <a href="#">Aries</a>,
-                                <a href="#">Fire</a>, <a href="#">Mars</a>
-                            </div>
-                            <div class="group2 col-sm-6 col-md-6">
+                            <div class="group1 col-sm-4 col-md-4">
+								<span class="glyphicon glyphicon-bookmark"></span>` + strings.Join(a.Tags, ", ") +
+
+		`</div>
+                            <div class="group2 col-sm-8 col-md-8">
                                 <span class="glyphicon glyphicon-pencil"></span> <a href="/article/` + url + `#comments">` +
 		strconv.Itoa(len(a.Comments)) + ` Comments</a>  
 								<span class="glyphicon glyphicon-time"></span>` + a.Date.String() + `
