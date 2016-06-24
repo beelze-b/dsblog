@@ -2,7 +2,6 @@ package article
 
 import (
 	"bytes"
-	"fmt"
 	"golang.org/x/text/language"
 	"golang.org/x/text/search"
 	"html/template"
@@ -32,7 +31,6 @@ func UseMatcher(matcher *search.Matcher, searchTerm string, fileName string) boo
 
 func NewSearchResults(searchTermsString string) SearchResults {
 	var articleDirectory string = filepath.Dir("src/static/articles/")
-	articlesArray := make([]Article, 10)
 
 	if articleDirectory == "." {
 		log.Panic("Directory not found")
@@ -44,11 +42,11 @@ func NewSearchResults(searchTermsString string) SearchResults {
 	if err != nil {
 		log.Panic(err)
 	}
+	// 0 length to not get default empty articles that search accidentally indexes
+	articlesArray := make([]Article, 0, len(files))
 
 	matcher := search.New(language.English)
-	fmt.Println(files)
 	for _, file := range files {
-		fmt.Println(file.Name())
 		for _, searchTerm := range searchTerms {
 			validArticle := UseMatcher(matcher, searchTerm, file.Name())
 			if validArticle {
