@@ -1,1 +1,50 @@
 @import "../bootstrap-3.1.1/less/variables.less";
+
+@font-family-sans-serif: "Roboto", sans-serif;
+@font-size-base: 13px;
+@line-height-base: 1.8;
+
+@headings-font-family: "Oswald", sans-serif;
+@headings-font-weight: 700;
+
+@font-size-h1: floor((@font-size-base * 3.1));
+@font-size-h2: floor((@font-size-base * 2.65));
+@font-size-h3: floor((@font-size-base * 2.2));
+@font-size-h4: floor((@font-size-base * 1.75));
+
+@gray-base: #1F1F1B;
+ 
+@gray-darker: lighten(@gray-base, 13.5%); // TODO:
+@gray-dark: lighten(@gray-base, 20%); // TODO:
+@gray: lighten(@gray-base, 33.5%); // TODO:
+@gray-light: lighten(@gray-base, 60%); // TODO:
+@gray-lighter: lighten(@gray-base, 93.5%); // TODO:
+
+@brand-primary: #AEAF57; // olive green
+@brand-success: #F95D0F; // orange
+@brand-info: #9393FA; // light blue
+@brand-warning: #4512C6; // dull blue
+@brand-danger: #4F4F36; // army green
+@brand-light: #FBFFDF; // whitish gree
+
+@body-bg: @brand-info;
+@link-color: @brand-success;
+@hr-border: @brand-warning;
+
+@panel-bg: @brand-light;
+@panel-primary-text: @brand-light;
+@panel-primary-border: @brand-info
+
+@list-group-bg: @brand-light;
+@list-group-border: @brand-info;
+
+@well-bg: @brand-light;
+@well-border: @brand-info;
+
+.well {
+    .lead {
+        font-family: @headings-font-family;
+        font-weight: @headings-font-weight;
+        font-size: @font-size-h3;
+    }
+}
