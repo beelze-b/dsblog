@@ -65,9 +65,7 @@ body {
 
                         <div class="row">
                             <div class="group2 col-sm-12 col-md-12">
-                                <span class="glyphicon glyphicon-pencil"></span> <a href="/article/{{.Url}}#comments">{{len .Comments}}
-                                    Comments</a>
-                                <span class="glyphicon glyphicon-time"></span> {{.Date}}
+				    <span class="glyphicon glyphicon-time"></span> {{.Date}}
                             </div>
                         </div>
 
@@ -84,46 +82,6 @@ body {
                         </li>
                     </ul>
                     <!-- comments -->
-
-                    <div class="well">
-
-                        <h4> Comments </h4>
-                        <form role="form" class="clearfix" action="/submitcomment/{{.Url}}"  method="POST">
-                            <div class="col-md-6 form-group">
-                                <label class="sr-only" for="name">Name</label>
-                                <input type="text" class="form-control" id="name" name="name" placeholder="Name">
-                            </div>
-
-                            <div class="col-md-6 form-group">
-                                <label class="sr-only" for="email">Email</label>
-                                <input type="email" class="form-control" id="email" name="email" placeholder="Email">
-                            </div>
-
-                            <div class="col-md-12 form-group">
-                                <label class="sr-only" for="comment">Comment</label>
-                                <textarea class="form-control" id="comment" name="comment" placeholder="Comment"></textarea>
-                            </div>
-
-                            <div class="col-md-12 form-group text-right">
-                                <button type="submit" class="btn btn-primary">Submit</button>
-                            </div>
-                        </form>
-                        <!-- comments go here -->
-                        <ul id="comments" class="comments">
-                            {{range $comment := .Comments}}
-                            <li class="comment">
-                                <div class="clearfix">
-                                    <h4 class="pull-left">{{$comment.Author}}</h4>
-                                    <p class="pull-right">{{$comment.Date}}</p>
-                                </div>
-                                <p>
-                                <em>{{$comment.Content}}</em>
-                                </p>
-                            </li>
-                            {{end}}
-                        </ul>
-
-                    </div>
 
                 </div>
 

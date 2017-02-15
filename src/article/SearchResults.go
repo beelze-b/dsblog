@@ -8,7 +8,6 @@ import (
 	"io/ioutil"
 	"log"
 	"path/filepath"
-	"strconv"
 	"strings"
 )
 
@@ -76,9 +75,7 @@ func DisplaySearchResult(a Article) template.HTML {
                                 <a href="#">Fire</a>, <a href="#">Mars</a>
                             </div>
                             <div class="group2 col-sm-6 col-md-6">
-                                <span class="glyphicon glyphicon-pencil"></span> <a href="/article/` + url + `#comments">` +
-		strconv.Itoa(len(a.Comments)) + ` Comments</a>  
-								<span class="glyphicon glyphicon-time"></span>` + a.Date.String() + `
+			    <span class="glyphicon glyphicon-time"></span>` + a.Date.String() + `
                             </div>
                         </div>
                         <hr>

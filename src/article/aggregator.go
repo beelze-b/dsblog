@@ -7,7 +7,6 @@ import (
 	"html/template"
 	"io/ioutil"
 	"log"
-	"strconv"
 	"strings"
 )
 
@@ -63,27 +62,25 @@ This returns a short version of each article ready to be displayed
 func (agg Aggregator) DisplayArticle(a Article) template.HTML {
 	var url = agg.TitleToUrl[a.Title]
 	var display = template.HTML(`<div> <article><h2> <a href="/article/` + url + `">` + a.Title + `</a> </h4>
-                        <div class="row">
-                            <div class="group1 col-sm-4 col-md-4">
-								<span class="glyphicon glyphicon-bookmark"></span>` + strings.Join(a.Tags, ", ") +
+	<div class="row">
+	<div class="group1 col-sm-4 col-md-4">
+	<span class="glyphicon glyphicon-bookmark"></span>` + strings.Join(a.Tags, ", ") +
 
-		`</div>
-                            <div class="group2 col-sm-8 col-md-8">
-                                <span class="glyphicon glyphicon-pencil"></span> <a href="/article/` + url + `#comments">` +
-		strconv.Itoa(len(a.Comments)) + ` Comments</a>  
-								<span class="glyphicon glyphicon-time"></span>` + a.Date.String() + `
-                            </div>
-                        </div>
-                        <hr>
+	`</div>
+	<div class="group2 col-sm-8 col-md-8">
+	<span class="glyphicon glyphicon-time"></span>` + a.Date.String() + `
+	</div>
+	</div>
+	<hr>
 
-                        <br />
-                        <p>` + a.LimitedContent + `</p>
-                        <p class="text-right">
-                        <a href="/article/` + url + `"class="text-right">
-                            continue reading...
-                        </a>
-                        </p>
-                        </hr></article> </div>`)
+	<br />
+	<p>` + a.LimitedContent + `</p>
+	<p class="text-right">
+	<a href="/article/` + url + `"class="text-right">
+	continue reading...
+	</a>
+	</p>
+	</hr></article> </div>`)
 	return display
 }
 

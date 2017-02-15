@@ -10,11 +10,7 @@ import (
 	"time"
 )
 
-type Comment struct {
-	Author  string
-	Date    string
-	Content string //content should be template style: see documentation details on golang site
-}
+
 type Article struct {
 	Title          string
 	Url            string
@@ -23,7 +19,6 @@ type Article struct {
 	Tags           []string
 	Content        template.HTML //content should be template style: see documentation details on golang site
 	LimitedContent string        // does not need to be type template.HTML because SearchResults and Aggregator Unescape
-	Comments       []Comment
 }
 
 func SaveJSONArticle(a Article) {
@@ -84,11 +79,7 @@ func LoadArticleFilePath(filePath string) (Article, error) {
 		return Article{}, errors.New("Article not found")
 	}
 }
-func (a *Article) AddComment(author string, date string, comment string) {
-	var entry = Comment{author, date, comment}
-	a.Comments = append(a.Comments, entry)
-	SaveJSONArticle(*a)
-}
+
 
 /**
 func main() {
