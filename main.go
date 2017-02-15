@@ -96,7 +96,7 @@ func ContactPageFunc(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "%s", ContactPage)
 }
 
-func main() {
+func init() {
 	/*
 		Title := "Hello"
 		Url := "hello.html"
@@ -117,5 +117,4 @@ func main() {
 	http.HandleFunc("/article/", articleHandler)
 	fs := http.FileServer(http.Dir("src/static"))
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
-	http.ListenAndServe(":8080", nil)
 }
