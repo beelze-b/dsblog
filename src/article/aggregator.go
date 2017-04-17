@@ -8,6 +8,7 @@ import (
 	"io/ioutil"
 	"log"
 	"strings"
+	"time"
 )
 
 type Aggregator struct {
@@ -68,7 +69,7 @@ func (agg Aggregator) DisplayArticle(a Article) template.HTML {
 
 	`</div>
 	<div class="group2 col-sm-8 col-md-8">
-	<span class="glyphicon glyphicon-time"></span>` + a.Date.String() + `
+	<span class="glyphicon glyphicon-time"></span>` + a.Date.Format(time.RFC822) + `
 	</div>
 	</div>
 	<hr>
