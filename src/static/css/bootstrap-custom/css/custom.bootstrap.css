@@ -4044,7 +4044,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   color: #bbbbb1;
 }
 .navbar-inverse .navbar-nav > li > a {
-  color: #1a1a1a;
+  color: #ffefcc;
 }
 .navbar-inverse .navbar-nav > li > a:hover,
 .navbar-inverse .navbar-nav > li > a:focus {
@@ -4091,7 +4091,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
     background-color: #020517;
   }
   .navbar-inverse .navbar-nav .open .dropdown-menu > li > a {
-    color: #1a1a1a;
+    color: #ffefcc;
   }
   .navbar-inverse .navbar-nav .open .dropdown-menu > li > a:hover,
   .navbar-inverse .navbar-nav .open .dropdown-menu > li > a:focus {
@@ -4112,7 +4112,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   }
 }
 .navbar-inverse .navbar-link {
-  color: #1a1a1a;
+  color: #ffefcc;
 }
 .navbar-inverse .navbar-link:hover {
   color: #4d4d4d;
