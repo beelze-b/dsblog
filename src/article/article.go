@@ -80,6 +80,10 @@ func LoadArticleFilePath(filePath string) (Article, error) {
 	}
 }
 
+func (a Article) DisplayDate() string {
+	return a.Date.Format(time.RFC822)
+}
+
 
 /**
 func main() {

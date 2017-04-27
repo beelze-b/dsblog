@@ -2,7 +2,9 @@ package main
 
 import (
 	"fmt"
-	"github.com/NabeelSarwar/dsblog/src/article"
+	// "github.com/NabeelSarwar/dsblog/src/article"
+	// app engine hack
+	"src/article"
 	"html/template"
 	"io/ioutil"
 	"log"
@@ -40,8 +42,8 @@ func sendEmailHandler(w http.ResponseWriter, r *http.Request) {
 	body := r.FormValue("message")
 
 	header := make(map[string]string)
-	header["From"] = (&mail.Address{sender, email}).String()
-	header["To"] = (&mail.Address{"Nabeel Sarwar", "nabeelsarwar200@gmail.com"}).String()
+	header["From"] = (&mail.Address{Name: sender, Address: email}).String()
+	header["To"] = (&mail.Address{Name: "Nabeel Sarwar", Address: "nabeelsarwar200@gmail.com"}).String()
 	header["Subject"] = subject
 
 	message := ""
@@ -96,7 +98,7 @@ func ContactPageFunc(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "%s", ContactPage)
 }
 
-func main() {
+func init() {
 	/*
 		Title := "Hello"
 		Url := "hello.html"
@@ -117,5 +119,5 @@ func main() {
 	http.HandleFunc("/article/", articleHandler)
 	fs := http.FileServer(http.Dir("src/static"))
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
-	http.ListenAndServe(":8080", nil)
+//	http.ListenAndServe(":8080", nil)
 }

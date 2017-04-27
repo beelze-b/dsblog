@@ -3,7 +3,8 @@ package article
 import (
 	"bytes"
 	"encoding/json"
-	"fmt"
+	// for app engine
+	// "fmt"
 	"html/template"
 	"io/ioutil"
 	"log"
@@ -51,8 +52,9 @@ func Aggregate() Aggregator {
 		TitleToUrl[art.Title] = art.Url
 		UrlToTitle[art.Url] = art.Title
 	}
-	fmt.Println("the number of articles is:")
-	fmt.Println(len(articles))
+	// for go app engine
+	// fmt.Println("the number of articles is:")
+	// fmt.Println(len(articles))
 	return Aggregator{articles, TitleToUrl, UrlToTitle}
 }
 
