@@ -2,108 +2,114 @@
 <!DOCTYPE html>
 <html>
 
-    <head>
-        <!--Font information goes here-->
-        <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
-        <link href='https://fonts.googleapis.com/css?family=Oswald:400,700,300' rel='stylesheet' type='text/css'>
+	<head>
+		<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-XXXXX-Y', 'auto');
+ga('send', 'pageview');
+		</script>
+		<script async src='https://www.google-analytics.com/analytics.js'></script>
+		<!--Font information goes here-->
+		<link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+		<link href='https://fonts.googleapis.com/css?family=Oswald:400,700,300' rel='stylesheet' type='text/css'>
 
 
-        <title>The Fun Ends Now</title>
-        <link rel="stylesheet" href="//code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css">
-        <script src="//code.jquery.com/jquery-1.10.2.js"></script>
-        <script src="//code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
+		<title>Liminal Bits</title>
+		<link rel="stylesheet" href="//code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css">
+		<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+		<script src="//code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
 
-        <!-- Bootstrap -->
-        <link rel="stylesheet" href="/static/css/bootstrap-custom/css/custom.bootstrap.css">
-        <script src="/static/css/custom-bootstrap/js/bootstrap.min.js"></script>
-       
-        <style type="text/css">
+		<!-- Bootstrap -->
+		<link rel="stylesheet" href="/static/css/bootstrap-custom/css/custom.bootstrap.css">
+		<script src="/static/css/custom-bootstrap/js/bootstrap.min.js"></script>
+
+		<style type="text/css">
 body {
-    padding-bottom: 70px;
+	padding-bottom: 70px;
 }
 
     .content {
-        margin: 10px;
+	    margin: 10px;
     }
-        </style>
-    </head>
+		</style>
+	</head>
 
-    <body>
+	<body>
 
-        <header class="navbav navbar-inverse bs-docs-nav" role="banner">
-            <div class="container">
-                <div class="navbar-header">
-                    <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a href="/" class="navbar-brand">Fun Ends Now</a>
-                </div>
-                <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
-                    <form class="navbar-form navbar-right" role="search" action="/search" method="GET">
-                        <div class="form-group">
-                            <input type="text" class="form-control" name="searchbar" placeholder="Search">
-                        </div>
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                    </form>
-                    <ul class="nav navbar-nav">
-                        <li><a href="/">Home</a></li>
-                        <li><a href="/contact.html">Contact me</a></li>
-                        <li><a href="/about.html">About</a></li>
-                    </ul>
-                </nav>
-            </div>
-        </header>
+		<header class="navbav navbar-inverse bs-docs-nav" role="banner">
+			<div class="container">
+				<div class="navbar-header">
+					<button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a href="/" class="navbar-brand">Fun Ends Now</a>
+				</div>
+				<nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
+					<form class="navbar-form navbar-right" role="search" action="/search" method="GET">
+						<div class="form-group">
+							<input type="text" class="form-control" name="searchbar" placeholder="Search">
+						</div>
+						<button type="submit" class="btn btn-primary">Submit</button>
+					</form>
+					<ul class="nav navbar-nav">
+						<li><a href="/">Home</a></li>
+						<li><a href="/contact.html">Contact me</a></li>
+						<li><a href="/about.html">About</a></li>
+					</ul>
+				</nav>
+			</div>
+		</header>
 
-        <div id="body" class="container">
-            <div class="row">
-                <div class="col-md-8">
-                    <article>
-                        <h2> <a href="/article/{{.Url}}"> {{.Title}}</a> </h2>
+		<div id="body" class="container">
+			<div class="row">
+				<div class="col-md-8">
+					<article>
+						<h2> <a href="/article/{{.Url}}"> {{.Title}}</a> </h2>
 
-                        <div class="row">
-                            <div class="group2 col-sm-12 col-md-12">
-				    <span class="glyphicon glyphicon-time"></span> {{.DisplayDate}}
-                            </div>
-                        </div>
+						<div class="row">
+							<div class="group2 col-sm-12 col-md-12">
+								<span class="glyphicon glyphicon-time"></span> {{.DisplayDate}}
+							</div>
+						</div>
 
-                        <hr>
-                        <br />
-                        <p> {{.Content}} </p>
-                        <hr> 
-                    </article>
+						<hr>
+						<br />
+						<p> {{.Content}} </p>
+						<hr> 
+					</article>
 
-                    <!-- those back and forward to time travel in the blog -->
-                    <ul class="pager">
-                        <li class="previous">
-                            <a href="/">← Main page</a>
-                        </li>
-                    </ul>
-                    <!-- comments -->
+					<!-- those back and forward to time travel in the blog -->
+					<ul class="pager">
+						<li class="previous">
+							<a href="/">← Main page</a>
+						</li>
+					</ul>
+					<!-- comments -->
 
-                </div>
+				</div>
 
-                <div class="col-md-4">
-                    <h1> Sidebar </h1>
-                    <!-- gotta put the stuff here -->
+				<div class="col-md-4">
+					<h1> Sidebar </h1>
+					<!-- gotta put the stuff here -->
 
-                    <div class="well text-center">
-                        <p class="lead">
-                        Have any questions, comments, or suggestions? Feel free to e-mail!
-                        </p>
-                        <button class="btn btn-primary">Subscribe</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+					<div class="well text-center">
+						<p class="lead">
+						Have any questions, comments, or suggestions? Feel free to e-mail!
+						</p>
+						<button class="btn btn-primary">Subscribe</button>
+					</div>
+				</div>
+			</div>
+		</div>
 
-        <footer> 
-            <div class="container">
-                2016
-            </div>
-        </footer>
-    </body>
+		<footer> 
+			<div class="container">
+				2016
+			</div>
+		</footer>
+	</body>
 </html>
 {{end}}
