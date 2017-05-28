@@ -45,7 +45,7 @@ body {
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</button>
-					<a href="/" class="navbar-brand">Fun Ends Now</a>
+					<a href="/" class="navbar-brand">Liminal Bits</a>
 				</div>
 				<nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
 					<form class="navbar-form navbar-right" role="search" action="/search" method="GET">
@@ -87,21 +87,34 @@ body {
 							<a href="/">← Main page</a>
 						</li>
 					</ul>
-					<!-- comments -->
+					<!--comments-->
+					<div id="disqus_thread"></div>
+					<!--end of comments-->
 
+					<script>
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+ *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+ */
+
+					var disqus_config = function () {
+						this.page.url = 'a unique URL for each page where Disqus is present';
+						this.page.identifier = 'a unique identifier for each page where Disqus is present';
+						this.page.title = 'a unique title for each page where Disqus is present';
+					};
+
+(function() {  // REQUIRED CONFIGURATION VARIABLE: EDIT THE SHORTNAME BELOW
+	var d = document, s = d.createElement('script');
+
+	s.src = '//EXAMPLE.disqus.com/embed.js';  // IMPORTANT: Replace EXAMPLE with your forum shortname!
+
+		s.setAttribute('data-timestamp', +new Date());
+	(d.head || d.body).appendChild(s);
+})();
+					</script>
+					<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
 				</div>
 
-				<div class="col-md-4">
-					<h1> Sidebar </h1>
-					<!-- gotta put the stuff here -->
-
-					<div class="well text-center">
-						<p class="lead">
-						Have any questions, comments, or suggestions? Feel free to e-mail!
-						</p>
-						<button class="btn btn-primary">Subscribe</button>
-					</div>
-				</div>
 			</div>
 		</div>
 
