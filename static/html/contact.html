@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-XXXXX-Y', 'auto');
+ga('send', 'pageview');
+		</script>
+		<script async src='https://www.google-analytics.com/analytics.js'></script>
+		<link rel="stylesheet" type="text/css" href="static/css/mainpage.css">
+
+		<!--Font information goes here-->
+		<link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+		<link href='https://fonts.googleapis.com/css?family=Oswald:400,700,300' rel='stylesheet' type='text/css'>
+
+
+		<title>Liminal Bits</title>
+		<link rel="stylesheet" href="//code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css">
+		<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+		<script src="//code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
+
+		<!-- Bootstrap -->
+		<link rel="stylesheet" type="text/css" href="static/css/bootstrap-custom/css/custom.bootstrap.css">
+		<script src="static/css/custom-bootstrap/js/bootstrap.min.js"></script>
+
+		<style type="text/css">
+body {
+	padding-bottom: 70px;
+}
+
+    .content {
+	    margin: 10px;
+    }
+		</style>
+	</head>
+
+	<body>
+
+		<header class="navbav navbar-inverse bs-docs-nav" role="banner">
+			<div class="container">
+				<div class="navbar-header">
+					<button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a href="/" class="navbar-brand">Liminal Bits</a>
+				</div>
+				<nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
+					<form class="navbar-form navbar-right" role="search" action="/search" method="GET">
+						<div class="form-group">
+							<input type="text" class="form-control" name="searchbar" placeholder="Search">
+						</div>
+						<button type="submit" class="btn btn-primary">Submit</button>
+					</form>
+					<ul class="nav navbar-nav">
+						<li><a href="/">Home</a></li>
+						<li class="active"><a href="/contact.html">Contact me</a></li>
+						<li><a href="/about.html">About</a></li>
+					</ul>
+				</nav>
+			</div>
+		</header>
+
+		<div id="body" class="container">
+			<h1> Contact me</h1>
+
+			<div class="well">
+				<p class="lead">
+				If you have any suggestions, comments, or questions, don't hesitate to contact using the form below.
+				</p>
+			</div>
+
+			<div class="contact-form">
+				<form class="form-horizontal col-md-8" role="form" action="/emailme" method="POST">
+
+					<div class="form-group">
+						<label for="name" class="col-md-2">Name</label>
+						<div class="col-md-10">
+							<input type="text" class="form-control" name="name" id="name" placeholder="Name">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="email" class="col-md-2">E-mail</label>
+						<div class="col-md-10">
+							<input type="email" class="form-control" name="email" id="email" placeholder="E-mail">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="subject" class="col-md-2">Subject</label>
+						<div class="col-md-10">
+							<input type="subject" class="form-control" name ="subject" id="subject" placeholder="Subject">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="message" class="col-md-2">Message</label>
+						<div class="col-md-10">
+							<textarea class="form-control" id="message" name="message" placeholder="Message"></textarea>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<div class="col-md-12 text-right">
+							<button type="submit" class="btn btn-lg btn-primary">Submit!</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+
+		<footer> 
+			<div class="container">
+				2016
+			</div>
+		</footer>
+	</body>
+</html>

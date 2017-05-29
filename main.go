@@ -2,20 +2,20 @@ package main
 
 import (
 	"fmt"
-	// "github.com/NabeelSarwar/dsblog/src/article"
-	// app engine hack
-	"src/article"
 	"html/template"
 	"io/ioutil"
 	"log"
 	"net/http"
 	"net/mail"
 	"net/smtp"
+	// "github.com/NabeelSarwar/dsblog/article" //when using go build
+	// "time"
+	"article" // when using goapp serve
 )
 
 var agg = article.Aggregate()
 var templates = template.Must(template.ParseFiles(
-	"src/static/html/templatepost.html", "src/static/html/search_page.html", "src/static/html/mainpage.html"))
+	"static/html/templatepost.html", "static/html/search_page.html", "static/html/mainpage.html"))
 
 func ArticleTemplate(w http.ResponseWriter, r *http.Request, a article.Article) {
 	err := templates.ExecuteTemplate(w, "template_post", a)
@@ -81,7 +81,7 @@ func HomePageFunc(w http.ResponseWriter, r *http.Request) {
 }
 
 func AboutPageFunc(w http.ResponseWriter, r *http.Request) {
-	AboutPage, err := ioutil.ReadFile("src/static/html/about.html")
+	AboutPage, err := ioutil.ReadFile("static/html/about.html")
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
@@ -90,7 +90,7 @@ func AboutPageFunc(w http.ResponseWriter, r *http.Request) {
 }
 
 func ContactPageFunc(w http.ResponseWriter, r *http.Request) {
-	ContactPage, err := ioutil.ReadFile("src/static/html/contact.html")
+	ContactPage, err := ioutil.ReadFile("static/html/contact.html")
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
@@ -99,17 +99,19 @@ func ContactPageFunc(w http.ResponseWriter, r *http.Request) {
 }
 
 func init() {
-	/*
-		Title := "Hello"
-		Url := "hello.html"
-		Author := "Nabeel"
-		Tags := []string{"pew", "miracle"}
-		Date := time.Now()
-		LimitedContent := "Limited Content"
-		Content := template.HTML("This is the content full")
-		art := article.Article{Title, Url, Author, Date, Tags, Content, LimitedContent, Comments}
-		article.SaveJSONArticle(art)
+
+	/**
+	Title := "Hello"
+	Url := "hello.html"
+	Author := "Nabeel"
+	Tags := []string{"pew", "miracle"}
+	Date := time.Now()
+	LimitedContent := "Limited Content"
+	Content := []byte("This is the content full")
+	art := article.Article{Title, Url, Author, Date, Tags, Content, LimitedContent}
+	article.SaveJSONArticle(art)
 	*/
+
 
 	http.HandleFunc("/", HomePageFunc)
 	http.HandleFunc("/emailme", sendEmailHandler)
@@ -117,7 +119,7 @@ func init() {
 	http.HandleFunc("/about.html", AboutPageFunc)
 	http.HandleFunc("/contact.html", ContactPageFunc)
 	http.HandleFunc("/article/", articleHandler)
-	fs := http.FileServer(http.Dir("src/static"))
+	fs := http.FileServer(http.Dir("static"))
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
-//	http.ListenAndServe(":8080", nil)
+	//	http.ListenAndServe(":8080", nil)
 }

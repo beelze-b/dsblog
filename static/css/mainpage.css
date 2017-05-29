@@ -1,0 +1,73 @@
+body{
+	background-color: #FFFFCC;
+	text-color: #6212;
+}
+h1 {
+	color: green;
+	text-align: top;
+	font-size: 14pt;
+	font-family: "Georgia";
+	text-align: center;
+}
+
+#Intro{
+	font-family: 'Roboto', sans-serif;
+	text-align: center;
+	font-size: 10pt;
+}
+
+#NavigationBar{
+	text-align: center;
+	margin: 10px 20px 10px 20px; /* top right bottom left*/
+}
+
+.Navigation { 
+    display: inline-block;
+    position: relative;
+    left: 0;
+    background-color: #277554;
+    font-family: Arial, sans-serif;
+    width: auto;
+    height: auto;
+    padding: 10px;
+}
+
+.NavigationLinks{
+	text-decoration: none;
+    	color: #AA6639;
+}
+
+#Disclaimer{
+	font-size: 8pt;
+	text-align: center;
+
+	font-family: Courier;
+	font-style: italic;
+	font-weight: lighter;
+}
+ 
+h3{
+	color: #343477; /* some sort of blue. */
+	left: auto;
+
+}
+
+.ui-widget-content a, .ui-widget-content a:hover, .ui-widget-content a:visited, .ui-widget-content a:active {
+color: #2954d1 !important; 
+text-decoration: underline !important; 
+}
+
+/* Default styling for selected tab titles */ 
+.ui-state-active a, .ui-state-active a:link, .ui-state-active a:visited {
+color: #212121 !important;
+text-decoration: none !important;
+cursor: text !important;
+}
+
+/* Default styling for unselected tab titles */ 
+.ui-state-default a:hover, .ui-state-default a, .ui-state-default a:link, .ui-state-default a:visited {
+color: #555555 !important;
+text-decoration: none !important;
+cursor: text !important;
+}
+
