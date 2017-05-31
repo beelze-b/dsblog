@@ -1,0 +1,24 @@
+Hi, in this blog post, I hope to explore the performance of neural networks, particular auto-encoders, in detecting anomalous DotA matches 
+using the feature pipeline (if it can even be called such) I have published on my github. 
+Essentially, the idea was to collect a bunch of matches from before Patch 7.00 and then feed them into a neural network to detect 
+*weird* matches. The network architecture was that of a single hidden layer with sigmoid activation function and the output layer using
+the identity activation function.
+
+An anomalous match will be determined as matches with a relatively large reconstruction error. Because of this nature, the matches that could be considered anomalous could include matches with very large skill differences, matches with scripters or hackers, matches affected by poor network conditions or server shutdowns, the original match intent of these bot matches, or other miscellaneous sorts of matches. Before diving into this matter, I am going to give a gentle introduction to auto-encoders, mostly skipping over the math. Auto-encoders are neural networks that can be used to do dimensionality reduction, de-noise, or, for our purpose, to determine a measure for anomalies. This is possible because they are an unsupervised learning scheme that tries to reconstruct the original input with one or more hidden layers. The behavior, training, and tuning of auto-encoders is very similar to that of regular (not necessarily regularized) multi-layer perceptrons. Feed-forward and backpropagation are still key parts of the algorithm. The main constraint is that the final output layer needs to match the input layer as much as possible. This means that the output layer minimizes some error against an input layer that is of th same length.",
+
+Unfortunately, I had some issues with the data that were not forseen later. This data quality issues did impact the distribution of the 
+residuals but still left a very faint pattern left. I failed to control over game type. Some of the matches were single draft. 
+In fact, the first few times I tried this experiment, I was getting matches from the arcade mode **Dark Moon**.
+I also first started this project a few months ago, so not all of the matches I initially collected were 
+available on Dotabuff as I iterated on the features or the autoencoder architecture. 
+
+A somewhat nuanced issue is the large number of matches were a substantial number of the players do not give third parties their match data.
+In these games, a substantial number of players would not have some features accessible such as "APM" (which seems to have been removed in 
+later versions of the OpenDota API).
+
+Other issues in data arise from me collecting the wrong features or missing some features that could have been useful. 
+I should have captured whether a player abandoned for example. The data has which heroes were selected for the particular roles---along with
+their items---but the high cardinality of these dimensions made training infeasible on the machine I was using. 
+
+There is still a lot of work to attempt in the architecture of the autoencoder. I attempted ReLu activation functions, but I was having
+issues with dying neurons, especially in the iterations when I had multiple hidden layers. 
