@@ -1,7 +1,6 @@
 Hi, in this blog post, I hope to explore the performance of neural networks, particular auto-encoders, in detecting anomalous DotA matches 
 using the feature pipeline (if it can even be called such) I have published on my github. 
-Essentially, the idea was to collect a bunch of matches from Patch 7.06c and then feed them into a neural network to detect 
-*weird* matches. 
+Essentially, the idea was to collect a bunch of matches from Patch 7.06c and then feed them into a neural network to detect *weird* matches. 
 
 To give a bit of a context, **DotA 2** is a an online video game managed by *Valve* 
 The matches in the designated training and test sets would be used train the neural network and subsequently generate a distribution of
