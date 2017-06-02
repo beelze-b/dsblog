@@ -1,12 +1,33 @@
 Hi, in this blog post, I hope to explore the performance of neural networks, particular auto-encoders, in detecting anomalous DotA matches 
 using the feature pipeline (if it can even be called such) I have published on my github. 
-Essentially, the idea was to collect a bunch of matches from before Patch 7.00 and then feed them into a neural network to detect 
-*weird* matches. The network architecture was that of a single hidden layer with sigmoid activation function and the output layer using
-the identity activation function.
+Essentially, the idea was to collect a bunch of matches from Patch 7.06c and then feed them into a neural network to detect 
+*weird* matches. 
 
-An anomalous match will be determined as matches with a relatively large reconstruction error. Because of this nature, the matches that could be considered anomalous could include matches with very large skill differences, matches with scripters or hackers, matches affected by poor network conditions or server shutdowns, the original match intent of these bot matches, or other miscellaneous sorts of matches. Before diving into this matter, I am going to give a gentle introduction to auto-encoders, mostly skipping over the math. Auto-encoders are neural networks that can be used to do dimensionality reduction, de-noise, or, for our purpose, to determine a measure for anomalies. This is possible because they are an unsupervised learning scheme that tries to reconstruct the original input with one or more hidden layers. The behavior, training, and tuning of auto-encoders is very similar to that of regular (not necessarily regularized) multi-layer perceptrons. Feed-forward and backpropagation are still key parts of the algorithm. The main constraint is that the final output layer needs to match the input layer as much as possible. This means that the output layer minimizes some error against an input layer that is of th same length.",
+To give a bit of a context, **DotA 2** is a an online video game managed by *Valve* 
+The matches in the designated training and test sets would be used train the neural network and subsequently generate a distribution of
+reconstruction errors. If the autoencoder and the features used were both perfect, then the matches would be reconstructed perfectly with no 
+error; in actuality, some the features of some matches will be reconstructed with higher errors than others. 
 
-Unfortunately, I had some issues with the data that were not forseen later. This data quality issues did impact the distribution of the 
+The features are encoded into a sparse representation and then decoded into the output layer.
+This network architecture consists of a single hidden layer with sigmoid activation function and the output layer using
+the identity activation function, but more complicated networks might have multiple layers of weights as the encoder and decoder.
+
+The idea is that a sparse representation is enough to encode most matches, and because of this nature, 
+the matches with higher reconstructon errors could be considered anomalous. 
+Other uses of auto-encoders include dimension reduction or de-noising, but I will go along with the anomalous interpretation. 
+Ideally, the most anomalous matches will have situations where some of the players feed or troll, network conditions are impacting 
+numerous games but not enough to change the *standard* sparse represenations, or other weird stuff happens. 
+
+The behavior, training, and tuning of auto-encoders is very similar to that of regular (not necessarily regularized) multi-layer perceptrons. 
+Feed-forward and backpropagation are still key parts of the algorithm. The main constraint is that the final output layer needs to match the input layer as much as possible. 
+
+Unfortunately, I had some issues with the data that were not forseen later, and there nothing beyond a rudimentary design in the neural
+network, nonetheless, I found what are some interesting trends that corresponded 
+to some of my prior intuitions, and, more excitingly, some trends completely contradicted my expectations. 
+Because of this, I'd say that some more effort into one of the tasks I mention above could enable the
+data (or a similar batch) into a more directed effort such. 
+
+This data quality issues did impact the distribution of the 
 residuals but still left a very faint pattern left. I failed to control over game type. Some of the matches were single draft. 
 In fact, the first few times I tried this experiment, I was getting matches from the arcade mode **Dark Moon**.
 I also first started this project a few months ago, so not all of the matches I initially collected were 
@@ -22,3 +43,4 @@ their items---but the high cardinality of these dimensions made training infeasi
 
 There is still a lot of work to attempt in the architecture of the autoencoder. I attempted ReLu activation functions, but I was having
 issues with dying neurons, especially in the iterations when I had multiple hidden layers. 
+
