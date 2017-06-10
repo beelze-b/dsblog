@@ -20,7 +20,7 @@ numerous games but not enough to change the *standard* sparse represenations, or
 The behavior, training, and tuning of auto-encoders is very similar to that of regular (not necessarily regularized) multi-layer perceptrons. 
 Feed-forward and backpropagation are still key parts of the algorithm. The main constraint is that the final output layer needs to match the input layer as much as possible. 
 
-Unfortunately, I had some issues with the data that were not forseen later, and there nothing beyond a rudimentary design in the neural
+Unfortunately, I had some issues with the data that were not forseen later, and there is nothing beyond a rudimentary design in the neural
 network, nonetheless, I found what are some interesting trends that corresponded 
 to some of my prior intuitions, and, more excitingly, some trends completely contradicted my expectations. 
 Because of this, I'd say that some more effort into one of the tasks I mention above could enable the
@@ -37,9 +37,19 @@ In these games, a substantial number of players would not have some features acc
 later versions of the OpenDota API).
 
 Other issues in data arise from me collecting the wrong features or missing some features that could have been useful. 
-I should have captured whether a player abandoned for example. The data has which heroes were selected for the particular roles---along with
+The data has which heroes were selected for the particular roles---along with
 their items---but the high cardinality of these dimensions made training infeasible on the machine I was using. 
+
+Often times, my intuition about certain features was just wrong. In a first few of the iterations, matches were sometimes considered anomalous
+if one of the players pinged a lot. Often times my intuitition was right. Sometimes a match would be considered highly anomalous because
+a player spent an abnormal amount of gold for his role. Often times, this would be a player spam buying wards or teleport scrolls such as in
+match 3215353856 (Dire Pos 2 spent an abnormal amount of gold relative to his performance).
+
+I removed neutral kills because they were dominating the effect of detecting outliers in lower priority positions, but I retained ancients
+because ancients still had signal towards anomalies (such as games with 5 carries). I also do not consider rune pickups or pings anymore.
 
 There is still a lot of work to attempt in the architecture of the autoencoder. I attempted ReLu activation functions, but I was having
 issues with dying neurons, especially in the iterations when I had multiple hidden layers. 
 
+Remember to have good initialization practices or otherwise the autoencoder
+might just output the average of the data.
