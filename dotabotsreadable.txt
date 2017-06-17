@@ -33,18 +33,28 @@ with zeros, as a missing value for the ancient creep kills for the position 5 pl
 ancient creeps. At this point, I also selected out some of the data I gathered because it data quality issues or because it confused the 
 network model in reaching my purpose.
 
-The data goes into a simple TensorFlow implementation of a simple auto-encoder model. 
+The data goes into a simple TensorFlow implementation of a simple auto-encoder model. The model has one hidden layer with three quarters of
+the number of neurons of the input layer (and output layer). I used the AdamOptimizer to train the network. Stochastic gradient descent was
+having difficulties with local minima. After training, I calculate the reconstruction error for each match, and the reconstruction error is
+simply only the sum of the square of the residual across all the features.
+Afterwards, the anomalous matches are the matches with a total reconstruction cost at the 99th percentile or higher. 
 
+Here is a table with a few of the anomalous matches, and please take note that the outputs are the standardized features.
 
 I realize that there are many false positives in the anomalous matches. I think simple filtering rules and further improvements to the model
 mitigate the real risk of these concerns. In order to detect leavers by using anomalous matches, one could filter matches where an abandon
-happened given certain game durations and first blood timers.
+happened given certain game durations and first blood timers. A particularly useful filter for detecting feeders is the following:
+In matches with a total residual being in the 99th percentile, if the features with the highest reconstruction error was related to 
+player kills (such as kills per minute or total deaths), then the match quite often included feeders or bots.
+This is not to say that matches in this higher end of the spectrum of total residuals did not include feeders or bots when most deformed
+feature was something unrelated to player kills, but false negatives are less costly than false positives.
 
 Some results are pretty indicative of partial success. The follow matches had high enough residuals to count as anomalous matches and are
 clearly bots (or really dedicated players):
-https://www.dotabuff.com/matches/3215377994
-https://www.dotabuff.com/matches/3215274711
-https://www.dotabuff.com/matches/3215255292
+https://www.dotabuff.com/matches/3215350255
+https://www.dotabuff.com/matches/3215153289
+https://www.dotabuff.com/matches/3215384305
+https://www.dotabuff.com/matches/3215254006
 
 Some matches are just really weird:
 https://www.dotabuff.com/matches/3215162338
@@ -53,6 +63,7 @@ https://www.dotabuff.com/matches/3215344415 (In this particular match, Disruptor
 I am not really sure what is going with these matches:
 https://www.dotabuff.com/matches/3215181105
 https://www.dotabuff.com/matches/3215279863
+
 
 Following the idea of success, using some of these bot matches, I was, incidentally, able to find some 
 players that seemed to be losing a large 
@@ -80,6 +91,9 @@ Other issues in data arise from me collecting the wrong features or missing some
 The training and test data has which heroes were selected for the particular roles---along with
 their items---but the high cardinality of these dimensions made training infeasible on the machine I was using and the limits of my patience.
 
+I also messed up in encoding the positive and negative votes that a match has. In fact, the match with the highest residual also had among the
+highest of negative votes. When graphing, I excluded matches with these data abnormalities to better show behavior.
+
 Often times, my intuition about certain features was just wrong. In a first few of the iterations, matches were sometimes considered anomalous
 if one of the players pinged a lot. Often times my intuition was right. Sometimes a match would be considered highly anomalous because
 a player spent an abnormal amount of gold for his role. Often times, this would be a player spam buying wards or teleport scrolls such as in
@@ -91,10 +105,8 @@ because ancients still had signal towards anomalies (such as games with 5 carrie
 In the iteration of the project at the time of writing this article, there is some interesting behavior on-going with wards. 
 I expected that sentry and observer ward usage would be highly indicative of anomalous matches where players get frustrated and spam buy
 sentries. Often times, these matches actually corresponded to a player just buying more wards than usual but with good intentions such
-as in this match https://www.dotabuff.com/matches/3215388183.
+as in this match https://www.dotabuff.com/matches/3215448302.
 
 There is still a lot of work to attempt in the architecture of the auto-encoder. I attempted ReLu activation functions, but I was having
-issues with dying neurons, especially in the iterations when I had multiple hidden layers. 
-
-Remember to have good initialization practices or otherwise the auto-encoder
-might just output the average of the data.
+issues with dying neurons, especially in the iterations when I had multiple hidden layers. The hyperparameters have yet to be explored. 
+To introduce regularization, one could attempt to modify the objective function or introduce dropout.
