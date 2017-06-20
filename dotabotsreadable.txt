@@ -51,10 +51,10 @@ feature was something unrelated to player kills, but false negatives are less co
 
 Some results are pretty indicative of partial success. The follow matches had high enough residuals to count as anomalous matches and are
 clearly bots (or really dedicated players):
-https://www.dotabuff.com/matches/3215350255
 https://www.dotabuff.com/matches/3215153289
 https://www.dotabuff.com/matches/3215384305
 https://www.dotabuff.com/matches/3215254006
+https://www.dotabuff.com/matches/3215350255
 
 Some matches are just really weird:
 https://www.dotabuff.com/matches/3215162338
@@ -99,8 +99,17 @@ if one of the players pinged a lot. Often times my intuition was right. Sometime
 a player spent an abnormal amount of gold for his role. Often times, this would be a player spam buying wards or teleport scrolls such as in
 match 3215353856 (Dire Position 2 spent an abnormal amount of gold relative to his performance).
 
-I removed neutral kills because they were dominating the effect of detecting outliers in lower priority positions, but I retained ancients
+I removed neutral kills as a feature at some point because they were dominating the 
+effect of detecting outliers in lower priority positions, but I retained ancients
 because ancients still had signal towards anomalies (such as games with 5 carries). I also do not consider rune pickups or pings anymore.
+
+Here are some generated graphs that attempt to demonstrate the effect of some of the features (or their combinations) on 
+the residual. There are mostly weak trends, but the possible identification of feeders and bots using the appropiate filters is near 
+undeniable. Surprinsingly, the overall trends when looking at some of the individual features are the opposite of 
+what one might expect in high residual games.
+Also, below is a sample table of games in the 99th percentile of reconstruction error that correspond to the filtering.
+If you want to dive at the data yourself, feel free to access [the Github repository](github.com/NabeelSarwar/Open-Dota-Exploration) 
+for this project.
 
 In the iteration of the project at the time of writing this article, there is some interesting behavior on-going with wards. 
 I expected that sentry and observer ward usage would be highly indicative of anomalous matches where players get frustrated and spam buy
