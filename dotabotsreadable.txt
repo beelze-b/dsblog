@@ -104,10 +104,19 @@ effect of detecting outliers in lower priority positions, but I retained ancient
 because ancients still had signal towards anomalies (such as games with 5 carries). I also do not consider rune pickups or pings anymore.
 
 Here are some generated graphs that attempt to demonstrate the effect of some of the features (or their combinations) on 
-the residual. There are mostly weak trends, but the possible identification of feeders and bots using the appropiate filters is near 
-undeniable. Surprinsingly, the overall trends when looking at some of the individual features are the opposite of 
-what one might expect in high residual games.
+the residual.  Surprinsingly, the overall trends when looking at some of the individual features are the opposite of 
+what one might expect in high residual games. There is only a weak correlation, if any, in most of these graphs,
+which highlights how contextual DotA matches are; 
+any particular feature is meaningless without other metrics because of how tightly correlated everything is.
+![](path_to_image)
+*image_caption*
+
+![](/static/graphs/DotaBots/Kill_Difference.png)
+*The logarithm of the absolute total kill difference between teams against the residual. There is a downward trend, suggesting that most
+anomalous games have little action.*
+
 Also, below is a sample table of games in the 99th percentile of reconstruction error that correspond to the filtering.
+The possible identification of feeders and bots using the appropiate filters is near undeniable.
 If you want to dive at the data yourself, feel free to access [the Github repository](github.com/NabeelSarwar/Open-Dota-Exploration) 
 for this project.
 
