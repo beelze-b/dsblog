@@ -4,11 +4,8 @@ import (
 	"fmt"
 	"html/template"
 	"io/ioutil"
-	"log"
 	"net/http"
-	"net/mail"
-	"net/smtp"
-	// "github.com/NabeelSarwar/dsblog/article" //when using go build
+	// "github.com/beelzebud/dsblog/article" //when using go build
 	// "time"
 	"article" // when using goapp serve
 )
@@ -35,29 +32,6 @@ func articleHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func sendEmailHandler(w http.ResponseWriter, r *http.Request) {
-	sender := r.FormValue("name")
-	email := r.FormValue("email")
-	subject := r.FormValue("subject")
-	host := "aspmx.l.google.com"
-	body := r.FormValue("message")
-
-	header := make(map[string]string)
-	header["From"] = (&mail.Address{Name: sender, Address: email}).String()
-	header["To"] = (&mail.Address{Name: "Nabeel Sarwar", Address: "nabeelsarwar200@gmail.com"}).String()
-	header["Subject"] = subject
-
-	message := ""
-	for k, v := range header {
-		message += fmt.Sprintf("%s: %s\r\n", k, v)
-	}
-	message += "\r\n" + body
-	auth := smtp.PlainAuth("", "nabeelsarwar200@gmail.com", "password", host)
-	err := smtp.SendMail(host+":25", auth, email, []string{"nabeelsarwar200@gmail.com"}, []byte(message))
-	if err != nil {
-		log.Println(err)
-	}
-
-	http.Redirect(w, r, "/contact.html", http.StatusFound)
 }
 
 func SearchBarHandler(w http.ResponseWriter, r *http.Request) {
@@ -89,15 +63,6 @@ func AboutPageFunc(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "%s", AboutPage)
 }
 
-func ContactPageFunc(w http.ResponseWriter, r *http.Request) {
-	ContactPage, err := ioutil.ReadFile("static/html/contact.html")
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-	fmt.Fprintf(w, "%s", ContactPage)
-}
-
 func init() {
 
 	/**
@@ -117,7 +82,6 @@ func init() {
 	http.HandleFunc("/emailme", sendEmailHandler)
 	http.HandleFunc("/search", SearchBarHandler)
 	http.HandleFunc("/about.html", AboutPageFunc)
-	http.HandleFunc("/contact.html", ContactPageFunc)
 	http.HandleFunc("/article/", articleHandler)
 	fs := http.FileServer(http.Dir("static"))
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
