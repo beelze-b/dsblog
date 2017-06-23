@@ -63,6 +63,10 @@ func AboutPageFunc(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "%s", AboutPage)
 }
 
+func StaticRedirectHandler(w http.ResponseWriter, r *http.Request) {
+	http.Redirect(w, r, "https://storage.googleapis.com/dsblog-158823.appspot.com" + r.URL.Path, 302)
+}
+
 func init() {
 
 	/**
@@ -83,7 +87,6 @@ func init() {
 	http.HandleFunc("/search", SearchBarHandler)
 	http.HandleFunc("/about.html", AboutPageFunc)
 	http.HandleFunc("/article/", articleHandler)
-	fs := http.FileServer(http.Dir("static"))
-	http.Handle("/static/", http.StripPrefix("/static/", fs))
+	http.HandleFunc("/static/", StaticRedirectHandler)
 	//	http.ListenAndServe(":8080", nil)
 }

@@ -1,8 +1,14 @@
-Hi, in this blog post, I hope to explore the performance of neural networks, particular auto-encoders, in detecting anomalous DotA matches 
+Hi, in this blog post, I hope to explore the performance of neural networks, particularly auto-encoders, in detecting anomalous DotA matches 
 using the feature pipeline (if it can even be called such) I have published on my github. 
 Essentially, the idea was to collect a bunch of matches from Patch 7.06c and then feed them into a neural network to detect *weird* matches. 
 
-To give a bit of a context, **DotA 2** is an online video game managed by *Valve* 
+To give a bit of a context, **DotA 2** is an online video game designed and managed by *Valve*.
+In this game, five players are placed on two different factions, Radiant and Dire, for a total of ten players in a match. 
+The goal of the game is clear objectives on the game map and make way to destroy the "throne" of the opposing faction. Each of the five players
+plays a different role on the team, so players are well differentiated and teamwork is required. Basically, one has to acquire resources 
+such as gold and magical items, eliminiate the enemy multiple times, and do whatever it takes to clear the main objective of destroying the
+opposing throne. 
+
 The matches in the designated training and test sets would be used train the neural network and subsequently generate a distribution of
 reconstruction errors. If the auto-encoder and the features used were both perfect, then the matches would be reconstructed perfectly with no 
 error; in actuality, some the features of some matches will be reconstructed with higher errors than others. 
@@ -22,7 +28,7 @@ The behavior, training, and tuning of auto-encoders is very similar to that of r
 Feed-forward and backpropagation are still key parts of the algorithm. 
 The main constraint is that the final output layer needs to match the input layer as much as possible. 
 
-To gather data, I used the OPENDOTA API over a period a little over a week to gather about 170,000 matches. 
+To gather data, I used the [OPENDOTA API](https://docs.opendota.com) over a period a little over a week to gather about 170,000 matches. 
 The data gathered included things such as what heroes went to which lane, the kills per minute of the Position 1 player from Radiant 
 (and Dire), ward uses, and various other things that could be relevant in a match. I selected for All Pick or Captain's Mode 
 Public and Ranked matches. Since the game is mostly balanced for these sorts of games, then I figured the auto-encoder would have an easier
@@ -38,8 +44,6 @@ the number of neurons of the input layer (and output layer). I used the AdamOpti
 having difficulties with local minima. After training, I calculate the reconstruction error for each match, and the reconstruction error is
 simply only the sum of the square of the residual across all the features.
 Afterwards, the anomalous matches are the matches with a total reconstruction cost at the 99th percentile or higher. 
-
-Here is a table with a few of the anomalous matches, and please take note that the outputs are the standardized features.
 
 I realize that there are many false positives in the anomalous matches. I think simple filtering rules and further improvements to the model
 mitigate the real risk of these concerns. In order to detect leavers by using anomalous matches, one could filter matches where an abandon
@@ -59,8 +63,9 @@ clearly bots (or really dedicated players):
 
 
 Some matches are just really weird:
+
 * https://www.dotabuff.com/matches/3215162338
-* https://www.dotabuff.com/matches/3215344415 (In this particular match, Disruptor placed more wards than expected, and a player abandoned).
+* https://www.dotabuff.com/matches/3215344415 (In this particular match, Disruptor placed more wards than expected, and a player abandoned.)
 
 I am not really sure what is going with these matches:
 
@@ -185,3 +190,5 @@ as in this match https://www.dotabuff.com/matches/3215448302.
 There is still a lot of work to attempt in the architecture of the auto-encoder. I attempted ReLu activation functions, but I was having
 issues with dying neurons, especially in the iterations when I had multiple hidden layers. The hyperparameters have yet to be explored. 
 To introduce regularization, one could attempt to modify the objective function or introduce dropout.
+
+Nonetheless, hopefully this suggests a path to automate the moderation of the player community in order to have higher quality games.
