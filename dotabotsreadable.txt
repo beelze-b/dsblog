@@ -51,18 +51,21 @@ feature was something unrelated to player kills, but false negatives are less co
 
 Some results are pretty indicative of partial success. The follow matches had high enough residuals to count as anomalous matches and are
 clearly bots (or really dedicated players):
-https://www.dotabuff.com/matches/3215153289
-https://www.dotabuff.com/matches/3215384305
-https://www.dotabuff.com/matches/3215254006
-https://www.dotabuff.com/matches/3215350255
+
+* https://www.dotabuff.com/matches/3215153289
+* https://www.dotabuff.com/matches/3215384305
+* https://www.dotabuff.com/matches/3215254006
+* https://www.dotabuff.com/matches/3215350255
+
 
 Some matches are just really weird:
-https://www.dotabuff.com/matches/3215162338
-https://www.dotabuff.com/matches/3215344415 (In this particular match, Disruptor placed more wards than expected, and a player abandoned).
+* https://www.dotabuff.com/matches/3215162338
+* https://www.dotabuff.com/matches/3215344415 (In this particular match, Disruptor placed more wards than expected, and a player abandoned).
 
 I am not really sure what is going with these matches:
-https://www.dotabuff.com/matches/3215181105
-https://www.dotabuff.com/matches/3215279863
+
+* https://www.dotabuff.com/matches/3215181105
+* https://www.dotabuff.com/matches/3215279863
 
 
 Following the idea of success, using some of these bot matches, I was, incidentally, able to find some 
@@ -108,17 +111,71 @@ the residual.  Surprinsingly, the overall trends when looking at some of the ind
 what one might expect in high residual games. There is only a weak correlation, if any, in most of these graphs,
 which highlights how contextual DotA matches are; 
 any particular feature is meaningless without other metrics because of how tightly correlated everything is.
-![](path_to_image)
-*image_caption*
+![](/static/graphs/Open-Dota-Exploration/radiantpos1kills.png)
 
-![](/static/graphs/DotaBots/Kill_Difference.png)
+*You can see that the Position 1 player on the Radiant side tended to have no activity in 
+high residual matches.*
+
+![](/static/graphs/Open-Dota-Exploration/Kill_Difference.png)
+
 *The logarithm of the absolute total kill difference between teams against the residual. There is a downward trend, suggesting that most
 anomalous games have little action.*
 
 Also, below is a sample table of games in the 99th percentile of reconstruction error that correspond to the filtering.
 The possible identification of feeders and bots using the appropiate filters is near undeniable.
-If you want to dive at the data yourself, feel free to access [the Github repository](github.com/NabeelSarwar/Open-Dota-Exploration) 
+If you want to dive at the data yourself, feel free to access [the Github repository](https://www.github.com/beelzebud/Open-Dota-Exploration) 
 for this project.
+
+actual|column|match id|predicted
+:---:|:---:|:---:|:---:
+49.0|negative votes|3215497967|1.0
+15.0|negative votes|3215097220|1.0
+9.0|negative votes|3215312675|1.0
+0.997236430645|dire pos5 courier kills|3215162338|0.254108220339
+0.967831552029|radiant pos3 gpm|3215181105|0.215277791023
+0.986187636852|dire pos5 kda|3215377994|0.675353765488
+7.0|negative votes|3215271631|1.0
+0.915403366089|dire pos4 gpm|3215289100|0.162800624967
+0.915403366089|dire pos4 gpm|3215279863|0.155206382275
+5.0|negative votes|3215253055|1.0
+0.977942168713|radiant pos1 sentry uses|3215448302|0.730815529823
+0.0236208867282|dire pos3 gpm|3215416370|0.595808267593
+0.243853777647|radiant pos3 gpm|3215261563|0.536930799484
+4.0|negative votes|3215294948|0.999999940395
+0.996014475822|radiant pos5 kills|3215155134|0.729707717896
+0.172037020326|radiant pos4 gpm|3215350255|0.478152662516
+0.765351176262|radiant pos1 kpm|3215341221|0.473023504019
+0.796920537949|radiant pos2 gpm|3215306187|0.594073414803
+0.995038449764|dire pos4 gpm|3215302636|0.616404891014
+0.995248615742|dire pos5 gpm|3215316820|0.661065816879
+0.991396725178|dire pos3 sentry uses|3215190109|0.725191056728
+0.994378209114|dire pos2 gpm|3215355847|0.634865164757
+0.992697298527|radiant pos3 kills|3215130854|0.734208106995
+0.99599146843|radiant pos1 kills|3215259897|0.731749773026
+0.420948237181|dire pos1 totalgold|3215394671|0.15580162406
+0.853668451309|dire pos4 deaths|3215152225|0.677466273308
+0.97054040432|radiant pos2 kpm|3215274711|0.548053383827
+0.417959868908|dire pos3 xpm|3215366609|0.140711635351
+0.837321698666|radiant pos2 courier kills|3215449992|0.687711238861
+0.417725324631|radiant pos2 xpm|3215376405|0.142942205071
+0.617924034595|dire pos5 kpm|3215268540|0.222700610757
+0.772488415241|radiant pos4 kpm|3215420902|0.579163551331
+0.720203399658|dire pos1 hero heal|3215332931|0.546277999878
+0.720203399658|dire pos1 hero heal|3215327547|0.547204256058
+0.570976436138|dire pos5 kpm|3215354992|0.277706980705
+0.696351587772|dire pos2 lasthits|3215254939|0.59213912487
+0.896779537201|dire pos5 tower kills|3215149372|0.706301689148
+0.846275269985|radiant pos1 observer uses|3215370025|0.688222169876
+0.99476057291|dire pos2 sentry uses|3215201012|0.0275219380856
+0.737460970879|dire pos3 totalxp|3215272070|0.62419462204
+2.0|negative votes|3215223639|0.999818563461
+0.702699840069|dire pos1 hero dmg|3215422492|0.599272608757
+0.420081436634|radiant pos1 xpm|3215260456|0.113636702299
+0.13533718884|radiant pos3 sentry uses|3215354934|0.0243814960122
+2.0|negative votes|3215377592|0.999819636345
+2.0|negative votes|3215445972|0.999818325043
+0.992697298527|radiant pos3 kills|3215101148|0.748484134674
+0.776657044888|radiant pos4 sentry uses|3215174827|0.654739558697
 
 In the iteration of the project at the time of writing this article, there is some interesting behavior on-going with wards. 
 I expected that sentry and observer ward usage would be highly indicative of anomalous matches where players get frustrated and spam buy
