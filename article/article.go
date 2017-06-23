@@ -18,7 +18,7 @@ type Article struct {
 	Author         string
 	Date           time.Time
 	Tags           []string
-	Content        string // content should be template style: see documentation details on golang site -> string to template.HTML below
+	Content        []byte // content should be template style: see documentation details on golang site -> string to template.HTML below
 	LimitedContent string        // does not need to be type template.HTML because SearchResults and Aggregator Unescape
 }
 
@@ -86,7 +86,7 @@ func (a Article) DisplayDate() string {
 }
 
 func (a Article) DisplayContent() template.HTML {
-	return template.HTML(blackfriday.MarkdownBasic([]byte(a.Content)))
+	return template.HTML(blackfriday.MarkdownCommon(a.Content))
 }
 
 
