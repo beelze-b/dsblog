@@ -1,6 +1,6 @@
 [
     {
-      "origin": ["*"],
+      "origin": ["http://liminalbits.com"],
       "responseHeader": ["Content-Type"],
       "method": ["GET", "HEAD", "DELETE"],
       "maxAgeSeconds": 3600
