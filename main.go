@@ -64,7 +64,7 @@ func AboutPageFunc(w http.ResponseWriter, r *http.Request) {
 }
 
 func StaticRedirectHandler(w http.ResponseWriter, r *http.Request) {
-	http.Redirect(w, r, "https://storage.googleapis.com/dsblog-158823.appspot.com" + r.URL.Path, 302)
+	http.Redirect(w, r, "https://storage.googleapis.com/dsblog-158823.appspot.com" + r.URL.Path, 303)
 }
 
 func init() {
