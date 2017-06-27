@@ -265,6 +265,7 @@ actual|column|match id|predicted
 0.992697298527|radiant pos3 kills|3215101148|0.748484134674
 0.776657044888|radiant pos4 sentry uses|3215174827|0.654739558697
 
+<br><br>
 There is still a lot of work to attempt in the architecture of the auto-encoder. 
 I attempted ReLu activation functions, but I was having
 issues with dying neurons, especially in the iterations when I had multiple hidden layers. 
