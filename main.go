@@ -88,5 +88,7 @@ func init() {
 	http.HandleFunc("/about.html", AboutPageFunc)
 	http.HandleFunc("/article/", articleHandler)
 	http.HandleFunc("/static/", StaticRedirectHandler)
+	// fs := http.FileServer(http.Dir("static"))
+ 	// http.Handle("/static/", http.StripPrefix("/static/", fs))
 	//	http.ListenAndServe(":8080", nil)
 }
