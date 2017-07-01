@@ -58,13 +58,20 @@
 @navbar-inverse-brand-color: @brand-success;
 @navbar-inverse-brand-hover-color:  lighten(@brand-success, 20%);
 
+// @navbar-inverse-link-active-bg: #98AFCC; not working
+.navbar-inverse .navbar-nav .active > a {  
+    background: #98AFC7 !important;
+}
+
 @pagination-color: @brand-light;
 @pagination-bg: @brand-primary;
 @pagination-border: @brand-primary;
- 
-@pagination-hover-color: @brand-primary;
+ @pagination-hover-color: @brand-primary;
 @pagination-hover-bg: @brand-light;
 @pagination-hover-border: @brand-primary;
+
+@btn-primary-color: #000; 
+@btn-primary-bg: #FF91A4 ;
  
 .pager {
     li {
@@ -84,18 +91,4 @@
     font-family: @headings-font-family;
     font-size: 18px;
     font-weight: bold;
-}
-
-.navbar-inverse .navbar-nav .active > a {  
-    background: #98AFC7 !important;
-}
-
-// for  the search button, look at the linear gradient section to change the color
-.btn-primary {
-    background-image: -webkit-linear-gradient(top, #1a1a1a 0%, #000000 100%);
-    background-image: linear-gradient(to bottom, #d2a5a5 0%, #6f5858 100%) !important;
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff1a1a1a', endColorstr='#ff000000', GradientType=0);
-    filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
-    background-repeat: repeat-x;
-    border-color: #000000;
 }
