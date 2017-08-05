@@ -133,6 +133,7 @@ def playerMatchObtain(player, heroList = [8, 74, 106]):
 
 # In[16]:
 
+print('Loading matches')
 matchSet = set()
 if os.path.exists('matchset.txt'):
     matchSet = np.loadtxt('matchset.txt', dtype=np.int64)
@@ -242,7 +243,7 @@ def GetHeroHistory(steamid, heroid):
     x = x.json()
     features = {'kills': [], 'deaths': [], 'assists': [], 
                 'lastHits': [], 'denies': [], 'gold': [], 'xp': [],
-                'heroDamage': [], 'heroHealing': [], 'role': []}
+                'heroDamage': [], 'heroHealing': []}
     # operating on the game level
     for game in x['results']:
         # duration is in seconds
@@ -256,13 +257,11 @@ def GetHeroHistory(steamid, heroid):
         features['xp'].append(game['players'][0]['expPerMinute'] * 1.0 * duration/60)
         features['heroDamage'].append(game['players'][0]['heroDamage'])
         features['heroHealing'].append(game['players'][0]['heroHealing'])
-        features['role'].append(game['players'][0]['role'])
     return {'kills': np.mean(features['kills']), 'deaths': np.mean(features['deaths']), 
             'assists': np.mean(features['assists']), 
             'lastHits': np.mean(features['lastHits']), 'denies': np.mean(features['denies']), 
             'gold': np.mean(features['gold']), 'xp': np.mean(features['xp']),
-            'heroDamage': np.mean(features['heroDamage']), 'heroHealing': np.mean(features['heroHealing']), 
-            'role': stats.mode(features['role'])[0][0]}
+            'heroDamage': np.mean(features['heroDamage']), 'heroHealing': np.mean(features['heroHealing'])} 
 
 
 # In[28]:
@@ -272,6 +271,7 @@ GetHeroHistory(54325937, 74)
 
 # In[6]:
 
+print('Loading invoker data')
 if not os.path.exists('invokerMatchFeatureSetPlus.csv'):
     analyzeMatchesForFeatures(matchSet)
     invokerMatchFeatureSetPlus = pd.DataFrame(prototypeDataframe)
@@ -300,7 +300,6 @@ def invokerRowAugment(row):
         data['OSHero' + str(ix+1) + 'xp'] = heroInfo['xp']
         data['OSHero' + str(ix+1) + 'heroDamage'] = heroInfo['heroDamage']
         data['OSHero' + str(ix+1) + 'heroHealing'] = heroInfo['heroHealing']
-        data['OSHero' + str(ix+1) + 'role'] = heroInfo['role']
         if ix != 4:
             heroInfo = GetHeroHistory(row['invokerSideHero' + str(ix+1) + 'Steam'], 
                                       row['invokerSideHero' + str(ix+1)])
@@ -314,12 +313,12 @@ def invokerRowAugment(row):
             data['ISHero' + str(ix+1) + 'xp'] = heroInfo['xp']
             data['ISHero' + str(ix+1) + 'heroDamage'] = heroInfo['heroDamage']
             data['ISHero' + str(ix+1) + 'heroHealing'] = heroInfo['heroHealing']
-            data['ISHero' + str(ix+1) + 'role'] = heroInfo['role']
     return pd.Series(data)
 
 
 # In[38]:
 
+print('Loading supplemental data')
 if not os.path.exists('supplementalInvokerMatchData.csv'):
     supplementalInvokerMatchData = invokerMatchFeatureSetPlus.apply(invokerRowAugment, axis=1)
     supplementalInvokerMatchData.to_csv('supplementalInvokerMatchData.csv', index=False)
