@@ -1,0 +1,15 @@
+The data was obtained by using the [Stratz API](https://docs.stratz.com) with the initial set of matches coming
+from Ken of Stratz.
+
+
+One thing I could have done is done some processing on the sequences. 
+For example, you cannot buy a Null Talisman, but
+you instead buy a circlet, mantle, and recipe in some order. Better grouping of items and mapping such as some
+combination of the Null talisman components into an indication of buying a Null Talisman could extra more
+meaningful signal. After all, it doesn't matter what order you buy components of an item. However, I did not want
+to deal with situations with when people opt to not finish an item immediately. I could have also removed
+Null Talisman or any item that isn't a purchaseable item and limited the number of targets.
+
+
+I also forgot to take out from the sequences items that were context-dependent for buying, 
+such as teleport scrolls or salves.
