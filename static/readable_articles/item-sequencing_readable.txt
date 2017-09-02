@@ -1,3 +1,22 @@
+In this blog post, I attempt to explore the use of recurrent neural networks (RNNS) in predicting 
+what items *Invoker* players will purchase in standard *DotA 2* matches. 
+*DotA 2* is a game managed by Valve (and lead developed by IceFrog, hallowed be his name) with team-based,
+player versus player, and role-playing elements. As with most role-role playing games, there exists a diegetic component 
+of a character build where a player must choose how the character he or she plays is developed. One of these elements of construction
+includes what items a player with purchase with in-game rewards in order to strengthen their character, and I attempt to predict 
+this particular element with RNNs. The problem was limited to one of the characters of *DotA 2* in higher level matches.
+This blog post will not focus on particularly difficult techniques, this neural network is actually just a simple LSTM cell, and the code
+runs on most computers within the past 5 years. 
+
+All of the code referenced in this post---including data gathering, pre-processing, and modelling---are 
+included in [this project](https://github.com/beelzebud/Dota-ItemSequence). The frameworks used include NumPy, SciPy and TensorFlow. 
+Special thanks goes out to the (Straz team)[https://stratz.com] for their assistance in obtaining data using their API.
+
+Recurrent neural networks are particularly useful in supervised learning environemnts where sequence and order matters such as natural
+language processing, audio and visual encodings, and stateful changes. *DotA 2* is a game with a lot of state, and I only use a limited
+number of features of this state, but the results seem initially promising, so RNNs seem like a worthwile approach. 
+For this particular project, the network consists of a simple long short term memory cell. 
+
 The data was obtained by using the [Stratz API](https://docs.stratz.com) with the initial set of matches coming
 from Ken of Stratz.
 
