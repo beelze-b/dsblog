@@ -3,25 +3,77 @@ what items *Invoker* players will purchase in standard *DotA 2* matches.
 *DotA 2* is a game managed by Valve (and lead developed by IceFrog, hallowed be his name) with team-based,
 player versus player, and role-playing elements. As with most role-role playing games, there exists a diegetic component 
 of a character build where a player must choose how the character he or she plays is developed. One of these elements of construction
-includes what items a player with purchase with in-game rewards in order to strengthen their character, and I attempt to predict 
+includes what items a player will purchase with in-game rewards in order to strengthen their character, and I attempt to predict 
 this particular element with RNNs. The problem was limited to one of the characters of *DotA 2* in higher level matches.
-This blog post will not focus on particularly difficult techniques, this neural network is actually just a simple LSTM cell, and the code
+This blog post will not focus on particularly difficult techniques; the network is actually a simple LSTM cell, and the code
 runs on most computers within the past 5 years. 
 
-All of the code referenced in this post---including data gathering, pre-processing, and modelling---are 
+All of the code referenced in this post---including data gathering, pre-processing, and modeling---are 
 included in [this project](https://github.com/beelzebud/Dota-ItemSequence). The frameworks used include NumPy, SciPy and TensorFlow. 
-Special thanks goes out to the (Straz team)[https://stratz.com] for their assistance in obtaining data using their API.
+Special thanks goes out to the [Straz team](https://stratz.com) for their assistance in obtaining data using their API.
 
-Recurrent neural networks are particularly useful in supervised learning environemnts where sequence and order matters such as natural
+Recurrent neural networks are particularly useful in supervised learning environments where sequence and order matters such as natural
 language processing, audio and visual encodings, and stateful changes. *DotA 2* is a game with a lot of state, and I only use a limited
-number of features of this state, but the results seem initially promising, so RNNs seem like a worthwile approach. 
+number of features of this state, but the results seem initially promising.
 For this particular project, the network consists of a simple long short term memory cell. 
 
-The data was obtained by using the [Stratz API](https://docs.stratz.com) with the initial set of matches coming
-from Ken of Stratz.
+The data was obtained by using the [Stratz API](https://docs.stratz.com). 
+I was given a set of matches with a high level of skill by Ken of Stratz. For the players in these games, I then sought out their
+recent Invoker matches in patch 7.06e. Matches were limited to ranked All Pick or Captain's mode games. For these games, I obtained
+their list of purchased items, and this was the data actually used in the model.
+There is additional data obtained that are usable as features, but I did not incorporate them this iteration. This includes past 
+performance of allies and enemies on the hero of their choice. For example, if a teammate played Crystal in a particular game,
+I also gathered data for how that player did as Crystal Maiden in the previous 50 games in terms of the average kills, deaths, and other
+relevant pieces of information. Nonetheless, this extra information was not used in this model and was left as something of interest.
+
+# How does data transit through the network?
+To cover the motivations and mechanics of RNNs in this blog post would be ambitious, but I hope it will suffice to qualify the process
+of how an LSTM cell predicts the next item given the previous item. This will be a very high level overview, so some of the terms will
+be non-standard. The network consists of the input layer (the item), a long short term
+memory (LSTM) cell, and the output of that cell. To make the items interpretable by the architecture of the neural network, each item has
+its item identifier number converted to 266 different bits of information 
+(the number of purchasable items, including the possibility of no item). 
+So the *Infused Raindrops* with an item ID of 265 will have 265
+bits marked as zero, but the 266th bit will be denoted as one; the first item bit is reserved for padding to denote no item purchase and
+the ending of a sequence in a game. These 266th different bits of information, henceforth called neurons, compose the input layer. The
+neurons then send their information into the LSTM cell. The LSTM remembers its previous output and its previous state. The previous output
+serves the function of being a short term memory for the cell, and the previous state serves as a long term memory for the cell. 
+
+The cell uses the short term memory and the current input to learn what to forget from the long term memory with use of 
+forgetting parameters. It also uses the short term memory and input along with remembering parameters to know what should enter the
+long term memory. Some of the forgetting and remembering parameters along with the old long term memory and incoming long term memory
+are used to generate a new long term memory (or a new state for the cell). 
+
+With this new state, the cell can generate output. A set of output parameters generates an output layer using the
+input layer, short term memory (the previous output), and the new long term memory (the new state). Finally, I map the output layer of
+the cell to a final layer consisting of 266 neurons using a final set of parameters. These neurons are all activated in such a way
+that their values are between 0 and 1. Think of this as the neuron stating how confident that the next item will be the one corresponding
+to that bit. 
+The neuron with the highest activation denotes what the next predicted item should be. So if the third bit was the bit with the value
+closest to 1, then the item with the ID "2" (Blades of Attack) would be the predicted next item.
+
+How does the network deal with the first prediction? The initial short term memory and long term memory are empty, and I always started
+with a few initial items to seed the item sequence generation process.
 
 
-One thing I could have done is done some processing on the sequences. 
+# How does it learn to do this?
+Given the matches that I collected, I partition this data into completely distinct training and test sets. The training set is used to 
+teach the network how the parameters should be tweaked. The way it does that is that it tries to do a bunch of predictions based
+on the transitions of purchased item to the next purchased item for the item sequences (the different matches). If the prediction is 
+wrong, then it tweaks the necessary parameters. The training process goes through many iterations of failed predictions and tweaks.
+If you want more details, look up (truncated) backpropagation through time. Some knowledge in linear algebra and basic calculus will help.
+
+However, one must be careful to not use the training set to determine how good the model is. That is why we test on the test set.
+Sometimes, there is a validation set to evaluate the performance of different models. The model that performs best on the validation set
+is then used to evaluate on the test set to determine the final score for the model. However, I only made one model, and there wasn't 
+enough data to make all three different sets.
+
+# Some Results
+
+One thing to keep in mind is that randomly guessing would have an average accuracy of about 0.4% over an entire item sequence.
+My model had an accuracy of about 55% on a sequence with a standard deviation of 9%.
+
+One thing I could have done is done is some processing on the sequences. 
 For example, you cannot buy a Null Talisman, but
 you instead buy a circlet, mantle, and recipe in some order. Better grouping of items and mapping such as some
 combination of the Null talisman components into an indication of buying a Null Talisman could extra more
@@ -29,6 +81,18 @@ meaningful signal. After all, it doesn't matter what order you buy components of
 to deal with situations with when people opt to not finish an item immediately. I could have also removed
 Null Talisman or any item that isn't a purchaseable item and limited the number of targets.
 
-
 I also forgot to take out from the sequences items that were context-dependent for buying, 
 such as teleport scrolls or salves.
+
+Lastly, I did not train on enough data. There were only about 1000 matches in this data set, which is arguably not enough given how
+dismal or "predictable" the predictions could be. 
+
+# References
+- [Some official TensorFlow documentation of RNNs](https://www.tensorflow.org/tutorials/recurrent)
+- [colah's excellent article on LSTMs](http://colah.github.io/posts/2015-08-Understanding-LSTMs/)
+- [Some practical features of the basic RNN cells and their wrapping libraries highlighted by Denny Britz]
+(http://www.wildml.com/2016/08/rnns-in-tensorflow-a-practical-guide-and-undocumented-features/)
+- [Danijar's article on variable length sequences in TensorFlow]
+(https://danijar.com/variable-sequence-lengths-in-tensorflow/)
+- [Another article on variable length sequences]
+(https://r2rt.com/recurrent-neural-networks-in-tensorflow-iii-variable-length-sequences.html)
