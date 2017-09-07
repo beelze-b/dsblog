@@ -12,6 +12,11 @@ All of the code referenced in this post---including data gathering, pre-processi
 included in [this project](https://github.com/beelzebud/Dota-ItemSequence). The frameworks used include NumPy, SciPy and TensorFlow. 
 Special thanks goes out to the [Straz team](https://stratz.com) for their assistance in obtaining data using their API.
 
+So why even predict what items a player will buy as Invoker? This could be used as a tool to teach new players how to emulate higher
+level players. Professional players could explore lots of potential builds relatively quickly in contextual scenarios (although this
+model does not take into account the general state of a match). And if it works for items, it could reasonably work for skill progression
+or hero drafting.
+
 Recurrent neural networks are particularly useful in supervised learning environments where sequence and order matters such as natural
 language processing, audio and visual encodings, and stateful changes. *DotA 2* is a game with a lot of state, and I only use a limited
 number of features of this state, but the results seem initially promising.
@@ -71,7 +76,56 @@ enough data to make all three different sets.
 # Some Results
 
 One thing to keep in mind is that randomly guessing would have an average accuracy of about 0.4% over an entire item sequence.
-My model had an accuracy of about 55% on a sequence with a standard deviation of 9%.
+My model had an accuracy of about 55% on the test sequences with a standard deviation of 9%. It took about two hours to train 
+on a three year old laptop. 
+
+![](/static/graphs/ItemSequencing/accuracy.png)
+
+*Here, I use TensorBoard to monitor how the accuracy of the model changes through iterations of training. You can use TensorBoard to
+see if there are any funky things going on with your model during training.*
+
+![](/static/graphs/ItemSequencing/loss.png)
+
+*Similar graph as above, but I display the loss instead. The loss here was defined to be the cross-entropy between the target item
+and the predicted items. In a sense, this measures how disjoint the distributions were. As training goes on, the model performs better
+on the training set.*
+
+Here is part of an example sequence that the model generates when using a circlet, mantle, and null talisman recipe as the initial items:
+
+- branches
+- flask
+- circlet
+- mantle
+- recipe_null_talisman
+- null_talisman
+- boots
+- gloves
+- tpscroll
+- recipe_hand_of_midas
+- hand_of_midas
+- tpscroll
+- tpscroll
+- point_booster
+- staff_of_wizardry
+- ogre_axe
+- blade_of_alacrity
+- ultimate_scepter
+- tpscroll
+- recipe_travel_boots
+- travel_boots
+- blink
+
+Here is a list of matches and their corresponding sequence accuracy (corresponding to top 3 and bottom 3 accuracies):
+match id|accuracy
+:---:|:---:
+3293379090|0.76190478
+3301460616|0.74358976
+3308683837|0.73809522  
+3309468461|0.25
+3306228851|0.25
+3305013972|0.0909
+
+# Possible Future Work
 
 One thing I could have done is done is some processing on the sequences. 
 For example, you cannot buy a Null Talisman, but
@@ -85,7 +139,16 @@ I also forgot to take out from the sequences items that were context-dependent f
 such as teleport scrolls or salves.
 
 Lastly, I did not train on enough data. There were only about 1000 matches in this data set, which is arguably not enough given how
-dismal or "predictable" the predictions could be. 
+dismal or "predictable" the predictions could be. The model can also be a lot more complex such as stacking cells.
+
+# Conclusion
+RNNs seem to fit the right bill to predict Invoker items in most typical matches. This could easily be a tool to help new players 
+learn item progression. If the model were to be built with consideration of the unused features such as the past performance of allies
+and enemies on the hero they have chosen, then the suggestions can become much more contextualized. The model and data themselves could
+be better refined. Nonetheless, the model does much better than random chance. Perhaps the same idea could be applied to hero drafting
+or skill progression. 
+
+If anybody wants to further build on this or just use the data, feel free to comment or just go straight to the Github! Thanks for reading.
 
 # References
 - [Some official TensorFlow documentation of RNNs](https://www.tensorflow.org/tutorials/recurrent)
