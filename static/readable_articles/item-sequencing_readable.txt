@@ -116,14 +116,15 @@ Here is part of an example sequence that the model generates when using a circle
 - blink
 
 Here is a list of matches and their corresponding sequence accuracy (corresponding to top 3 and bottom 3 accuracies):
+
 match id|accuracy
-:---:|:---:
-3293379090|0.76190478
-3301460616|0.74358976
-3308683837|0.73809522  
+:--------:|:--------:
+3293379090|0.762
+3301460616|0.744
+3308683837|0.738
 3309468461|0.25
 3306228851|0.25
-3305013972|0.0909
+3305013972|0.091
 
 # Possible Future Work
 
