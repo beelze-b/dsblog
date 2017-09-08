@@ -159,3 +159,4 @@ If anybody wants to further build on this or just use the data, feel free to com
 (https://danijar.com/variable-sequence-lengths-in-tensorflow/)
 - [Another article on variable length sequences]
 (https://r2rt.com/recurrent-neural-networks-in-tensorflow-iii-variable-length-sequences.html)
+- [Stratz API](https://docs.stratz.com)
