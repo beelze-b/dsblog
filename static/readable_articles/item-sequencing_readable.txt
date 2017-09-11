@@ -1,15 +1,16 @@
 In this blog post, I attempt to explore the use of recurrent neural networks (RNNs) in predicting 
 what items *Invoker* players will purchase in standard *DotA 2* matches. 
-*DotA 2* is a game managed by Valve (and lead developed by IceFrog, hallowed be his name) with team-based,
+*DotA 2* is a game managed by Valve (and lead developed by IceFrog) with team-based,
 player versus player, and role-playing elements. As with most role-playing games, there exists a diegetic component 
 of a character build where a player must choose how the character he or she plays is developed. One of these elements of construction
 includes what items a player will purchase with in-game rewards in order to strengthen their character, and I attempt to predict 
 this particular element with RNNs. The problem was limited to one of the characters of *DotA 2* in higher level matches.
-This blog post will not focus on particularly difficult techniques; the network is actually a simple LSTM cell, and the code
-runs on most computers within the past 5 years. 
+This blog post will not focus on particularly difficult techniques; the network is actually a simple long short term memory (LSTM )cell, 
+and the code runs on most computers within the past 5 years. 
 
 All of the code referenced in this post---including data gathering, pre-processing, and modeling---are 
-included in [this project](https://github.com/beelzebud/Dota-ItemSequence). The frameworks used include NumPy, SciPy and TensorFlow. 
+included in [this project](https://github.com/beelzebud/Dota-ItemSequence). The frameworks used include NumPy, SciPy and TensorFlow 
+(everything was written in Python). 
 Special thanks goes out to the [Stratz team](https://stratz.com) for their assistance in obtaining data using their API.
 
 So why even predict what items a player will buy as Invoker? This could be used as a tool to teach new players how to emulate higher
@@ -17,9 +18,9 @@ level players. Professional players could explore lots of potential builds relat
 model does not take into account the general state of a match). And if it works for items, it could reasonably work for skill progression
 or hero drafting.
 
-Recurrent neural networks are particularly useful in supervised learning environments where sequence and order matters such as natural
-language processing, audio and visual encodings, and stateful changes. *DotA 2* is a game with a lot of state, and I only use a limited
-number of features of this state, but the results seem initially promising.
+Recurrent neural networks are particularly useful in environments where sequence and order matters such as natural
+language processing, audio and visual encodings, and stateful changes. *DotA 2* is a game with a lot of conditions, states, and variables, 
+and I only use a limited amount of information that a game contains, but the results seem initially promising.
 For this particular project, the network consists of a simple long short term memory cell. 
 
 The data was obtained by using the [Stratz API](https://docs.stratz.com). 
@@ -32,16 +33,9 @@ I also gathered data for how that player did as Crystal Maiden in the previous 5
 relevant pieces of information. Nonetheless, this extra information was not used in this model and was left as something of interest.
 
 # How does data transit through the network?
-To cover the motivations and mechanics of RNNs in this blog post would be ambitious, but I hope it will suffice to qualify the process
-of how an LSTM cell predicts the next item given the previous item. This will be a very high level overview, so some of the terms will
-be non-standard. The network consists of the input layer (the item), a long short term
-memory (LSTM) cell, and the output of that cell. To make the items interpretable by the architecture of the neural network, each item has
-its item identifier number converted to 266 different bits of information 
-(the number of purchasable items, including the possibility of no item). 
-So the *Infused Raindrops* with an item ID of 265 will have 265
-bits marked as zero, but the 266th bit will be denoted as one; the first item bit is reserved for padding to denote no item purchase and
-the ending of a sequence in a game. These 266th different bits of information, henceforth called neurons, compose the input layer. The
-neurons then send their information into the LSTM cell. The LSTM remembers its previous output and its previous state. The previous output
+To cover the motivations and mechanics of RNNs in this blog post would be ambitious, but I hope it will suffice to say that an recurrent
+neural network uses its input and some vague history of the previous inputs to generate an output.
+A LSTM cell can be a component in a RNN because it tries to remember its previous output and its previous state. The previous output
 serves the function of being a short term memory for the cell, and the previous state serves as a long term memory for the cell. 
 How does the network deal with the first prediction? The initial short term memory and long term memory are empty, and I always started
 with a few initial items to seed the item sequence generation process.
@@ -51,14 +45,10 @@ forgetting parameters. It also uses the short term memory and input along with r
 long term memory. Some of the forgetting and remembering parameters along with the old long term memory and incoming long term memory
 are used to generate a new long term memory (or a new state for the cell). 
 
-With this new state, the cell can generate output. A set of output parameters generates an output layer using the
-input layer, short term memory (the previous output), and the new long term memory (the new state). Finally, I map the output layer of
-the cell to a final layer consisting of 266 neurons using a final set of parameters. These neurons are all activated in such a way
-that their values are between 0 and 1. Think of this as the neuron stating how confident that the next item will be the one corresponding
-to that bit. 
-The neuron with the highest activation denotes what the next predicted item should be. So if the third bit was the bit with the value
-closest to 1, then the item with the ID "2" (Blades of Attack) would be the predicted next item.
-
+With this new state, the cell can generate output. A set of output parameters generates an final output using the
+input item, short term memory (the previous output), and the new long term memory (the new state). Finally, I map that final output 
+the cell to probabilities of what the next purchased item will be. The item with the highest probability 
+denotes what the next predicted item should be. 
 
 # How does it learn to do this?
 Given the matches that I collected, I partition this data into completely distinct training and test sets. The training set is used to 
