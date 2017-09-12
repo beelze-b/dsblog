@@ -40,6 +40,18 @@ serves the function of being a short term memory for the cell, and the previous 
 How does the network deal with the first prediction? The initial short term memory and long term memory are empty, and I always started
 with a few initial items to seed the item sequence generation process.
 
+As mentioned before, RNNs are commonly used in natural language processing, so I will explain a bit of how LSTM cells work with a language 
+example. Suppose that you wanted to finish a sentence such as "Jack and Jill tried to go swimming in stormy weather, but they had to 
+________." You might use your idea within the sentence (your short term memory) to finish the sentence with "go back because the lake 
+was dangerous."
+
+However, suppose that the entire sequence was actually "Jack and Jill live in the city. Jack and Jill tried to go swimming in stormy 
+weather, but they had to go to __________." The finishing sequence could be "go the indoor pool downtown." The longer memory is certainly
+useful.
+
+In the above examples, the current input would be the most frequent phrase "but they had to go to." The short term memory would be
+the rest of the most recent sentence. And the long term memory could be some vague recollection of the previous sentences.
+
 The cell uses the short term memory and the current input to learn what to forget from the long term memory with use of 
 forgetting parameters. It also uses the short term memory and input along with remembering parameters to know what should enter the
 long term memory. Some of the forgetting and remembering parameters along with the old long term memory and incoming long term memory
@@ -130,6 +142,9 @@ such as teleport scrolls or salves.
 
 Lastly, I did not train on enough data. There were only about 1000 matches in this data set, which is arguably not enough given how
 dismal or "predictable" the predictions could be. The model can also be a lot more complex such as stacking cells.
+
+And as mentioned before, you can include more game-dependent features such as what heroes are being used, the kill difference, or
+whether you need to be offensive or defensive (although this could be its own project).
 
 # Conclusion
 RNNs seem to fit the right bill to predict Invoker items in most typical matches. This could easily be a tool to help new players 
