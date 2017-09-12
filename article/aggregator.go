@@ -10,12 +10,28 @@ import (
 	"log"
 	"strings"
 	"time"
+	"sort"
 )
 
 type Aggregator struct {
 	articles   []Article
 	TitleToUrl map[string]string
 	UrlToTitle map[string]string
+}
+
+type ArticleDateSorter []Article
+
+func (a ArticleDateSorter) Len() int {
+	return len(a)
+}
+
+func (a ArticleDateSorter) Swap(i, j int) {
+	a[i], a[j] = a[j], a[i]
+
+}
+
+func (a ArticleDateSorter) Less(i, j int) bool {
+	return a[i].Date.Before(a[j].Date)
 }
 
 // This function aggregates all the functions and creates an Aggregator object that can be
@@ -52,6 +68,7 @@ func Aggregate() Aggregator {
 		TitleToUrl[art.Title] = art.Url
 		UrlToTitle[art.Url] = art.Title
 	}
+	sort.Sort(sort.Reverse(ArticleDateSorter(articles)))
 	// for go app engine
 	// fmt.Println("the number of articles is:")
 	// fmt.Println(len(articles))
