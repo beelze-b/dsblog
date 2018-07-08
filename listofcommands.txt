@@ -1,4 +1,6 @@
 $GCLOUD/bin/gsutil -m rsync -r ./static  gs://dsblog-158823.appspot.com/static
+	Might need to check Content-Encoding of gz files
+
 $GCLOUD/bin/gsutil cors set cors-json-file.json
 gcloud app deploy --version beta
 
