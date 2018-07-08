@@ -1,0 +1,6 @@
+$GCLOUD/bin/gsutil -m rsync -r ./static  gs://dsblog-158823.appspot.com/static
+$GCLOUD/bin/gsutil cors set cors-json-file.json
+goapp deploy -application dsblog-158823 -version beta
+
+Might need to run this too
+gcloud components update
