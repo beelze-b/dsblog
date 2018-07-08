@@ -5,9 +5,9 @@ import (
 	"html/template"
 	"io/ioutil"
 	"net/http"
-	// "github.com/beelzebud/dsblog/article" //when using go build
+	"github.com/beelzebud/dsblog/article" //when using go build
 	// "time"
-	"article" // when using goapp serve
+	// "article" // when using goapp serve
 )
 
 var agg = article.Aggregate()
