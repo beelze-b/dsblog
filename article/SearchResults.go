@@ -70,12 +70,9 @@ func DisplaySearchResult(a Article) template.HTML {
 	var display = template.HTML(`<div> <article><h2> <a href="/article/` + url + `">` + a.Title + `</a> </h4>
                         <div class="row">
                             <div class="group1 col-sm-6 col-md-6">
-                                <span class="glyphicon glyphicon-folder-open"></span>  <a href="#">Signs</a>
-                                <span class="glyphicon glyphicon-bookmark"></span> <a href="#">Aries</a>,
-                                <a href="#">Fire</a>, <a href="#">Mars</a>
                             </div>
                             <div class="group2 col-sm-6 col-md-6">
-			    <span class="glyphicon glyphicon-time"></span>` + a.Date.String() + `
+			    <span class="glyphicon glyphicon-time"></span>` + a.DisplayDate() + `
                             </div>
                         </div>
                         <hr>
