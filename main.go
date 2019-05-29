@@ -1,6 +1,7 @@
 package main
 
 import (
+    "google.golang.org/appengine"
 	"fmt"
 	"html/template"
 	"io/ioutil"
@@ -80,14 +81,14 @@ func main() {
 	art := article.Article{Title, Url, Author, Date, Tags, Content, LimitedContent}
 	article.SaveJSONArticle(art)
 	*/
-
-
 	http.HandleFunc("/", HomePageFunc)
 	http.HandleFunc("/emailme", sendEmailHandler)
 	http.HandleFunc("/search", SearchBarHandler)
 	http.HandleFunc("/about.html", AboutPageFunc)
 	http.HandleFunc("/article/", articleHandler)
 	http.HandleFunc("/static/", StaticRedirectHandler)
+
+    appengine.Main()
 	// fs := http.FileServer(http.Dir("static"))
  	// http.Handle("/static/", http.StripPrefix("/static/", fs))
 	//	http.ListenAndServe(":8080", nil)
