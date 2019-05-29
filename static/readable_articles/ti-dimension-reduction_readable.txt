@@ -95,29 +95,29 @@ it tends to mess up a little on the TI5 matches. Pretty much else everything els
 ![](/static/graphs/TI-DR/kpca.png)
 *KPCA*
 
-!![](/static/graphs/TI-DR/lda.png)
+![](/static/graphs/TI-DR/lda.png)
 *LDA*
 
-[](/static/graphs/TI-DR/isomap.png)
+![](/static/graphs/TI-DR/isomap.png)
 *ISOMAP*
 
-[](/static/graphs/TI-DR/lle.png)
+![](/static/graphs/TI-DR/lle.png)
 *Locally Linear Embedding*
 
-[](/static/graphs/TI-DR/lmnn.png)
+![](/static/graphs/TI-DR/lmnn.png)
 *Largest Margin Neast Neighbors*
 
 
-[](/static/graphs/TI-DR/tsne.png)
+![](/static/graphs/TI-DR/tsne.png)
 *T-SNE*
 
-[](/static/graphs/TI-DR/lle.png)
+![](/static/graphs/TI-DR/lle.png)
 *Locally Linear Embedding*
 
-[](/static/graphs/TI-DR/umap.png)
+![](/static/graphs/TI-DR/umap.png)
 *UMAP*
 
-[](/static/graphs/TI-DR/self.png)
+![](/static/graphs/TI-DR/self.png)
 *SELF*
 
 
