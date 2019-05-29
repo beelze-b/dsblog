@@ -1,7 +1,7 @@
 package main
 
 import (
-    "google.golang.org/appengine"
+    // "google.golang.org/appengine"
 	"fmt"
 	"html/template"
 	"io/ioutil"
@@ -68,7 +68,7 @@ func StaticRedirectHandler(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "https://storage.googleapis.com/dsblog-158823.appspot.com" + r.URL.Path, 303)
 }
 
-func main() {
+func init() {
 
 	/**
 	Title := "Hello"
@@ -88,7 +88,7 @@ func main() {
 	http.HandleFunc("/article/", articleHandler)
 	http.HandleFunc("/static/", StaticRedirectHandler)
 
-    appengine.Main()
+    //appengine.Main()
 	// fs := http.FileServer(http.Dir("static"))
  	// http.Handle("/static/", http.StripPrefix("/static/", fs))
 	//	http.ListenAndServe(":8080", nil)
