@@ -8,7 +8,6 @@ import (
 	"net/http"
 	"github.com/beelzebud/dsblog/article" //when using go build
 	// "time"
-	// "article" // when using goapp serve
 )
 
 var agg = article.Aggregate()

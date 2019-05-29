@@ -24,6 +24,7 @@ item information, objective timings, building status, but then I got tired (sorr
 to visualize this as humans typically have capacity to visualize things up to a 3D space (including 1D and 2D objects of course). 
 
 
+
 # The Math Behind Visualization
 
 This part is more directed towards machine learning enthusiasts. The following concepts will be at an intermediate to advanced 
@@ -35,7 +36,9 @@ these techniques are **dimensionality reduction techniques**. Some dimensionally
 Unsupervised techniques would run on all the matches' data points, except we do not tell the algorithm which "The International" the match is from. 
 Below I will describe some of the techniques I used. 
 
+It is also important to note that I transformed the data obtained above using standard machine learning techniques such as OneHotEncoding and StandardScaling.
 It will be useful to describe the original space as the original data. The embedding space or projections will be the data after it is reduced to fewer dimensions.
+For all of the algorithms except SELF, I did not do standard train-test splitting. I just transformed all the data and then visualized it.
 
 
 ## Unsupervised Techniques
@@ -86,8 +89,15 @@ All of the above techniques have Python implementations that can be easily found
 
 Here, we see the basic visualization results for each of the previous algorithms.
 
-The most interesting thing is that the best performing algorithms show a visible transition of the meta, and this is most apparent in the SELF results. UMAP shows this as well, but
-it tends to mess up a little on the TI5 matches. Pretty much else everything else fails at finding something interesting. It could be that the other algorithms are picking something deeper than the meta such as play styles. 
+The most interesting thing is that the best performing algorithms show a visible transition of the meta, and this is most apparent in the SELF results. UMAP shows this as well, but it tends to mess up a little on the TI5 matches. Pretty much else everything else fails at finding something interesting. It could be that the other algorithms are picking something different than the meta such as play styles or evolution of matches. 
+
+Things of note:
+
+**T-SNE** has an almost ring-like structure to it. With the later years on the outside mostly. TI5 and TI6 are almost treated interchangeably.
+
+**UMAP** has a similar ring effect, but there is also a stronger demarcation from left to right. TI5 matches tend to be closer to TI6 and TI7 matches.
+
+**SELF** has a nearly perfect line of the evolution of the metas. This effect remains even if I do stantard train test splits.
 
 ![](/static/graphs/TI-DR/pca.png)
 *PCA*
@@ -111,9 +121,6 @@ it tends to mess up a little on the TI5 matches. Pretty much else everything els
 ![](/static/graphs/TI-DR/tsne.png)
 *T-SNE*
 
-![](/static/graphs/TI-DR/lle.png)
-*Locally Linear Embedding*
-
 ![](/static/graphs/TI-DR/umap.png)
 *UMAP*
 
@@ -129,13 +136,11 @@ One thing to note that this ranking of the performance of the algorithms is not 
 It would be interesting to analyze deeper what the failure points of less visually appealing algorithms. It could also be the case that they are picking up different aspects of DotA
 beyond the meta like teams, shared players across the years, etc.
 
-I also did not optimize each algorithm to its possibly best performance, as I re-used certain configurations (hyperparameters) across the models.  
-It could be that some of the algorithms above should be ranked differently.
+I also did not optimize each algorithm to its possibly best performance, as I re-used certain configurations (hyperparameters) across the models. It could be that some of the algorithms above should be ranked differently.
 
 Nonetheless, dimensionality reduction techniques seem to be fruitful in capturing the meta for us in algorithms that might require fewer dimensions for tractability or better performance by some metric.
 
-In addition, for all the algorithms (but especially the supervised ones), I did not evaluate generalization by doing basic things like having a training set, (validation set), or test set. 
-This is a really bad thing to do if I were trying to use these algorithms for a downstream purpose or for repeated dimensionality reduction.
+In addition, for all the algorithms (but especially the supervised ones), I did not evaluate generalization (except for SELF) by doing basic things like having a training set, (validation set), or test set. This is a really bad thing to do if I were trying to use these algorithms for a downstream purpose or for repeated dimensionality reduction.
 
 
 # References
