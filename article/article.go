@@ -28,7 +28,7 @@ func SaveJSONArticle(a Article) {
 		log.Fatal(err)
 		return
 	}
-	title := strings.ToLower(strings.Replace(a.Title, " ", "_", -1)) + ".html"
+	title := strings.ToLower(strings.Replace(a.Title, " ", "_", -1)) + ".json"
 	filePath := "static/articles/" + title
 	// 0644 means overwrite
 	ioutil.WriteFile(filePath, b, 0644)
