@@ -6,7 +6,7 @@ import (
 	"html/template"
 	"io/ioutil"
 	"net/http"
-	"github.com/beelzebud/dsblog/article" //when using go build
+	"github.com/beelze-b/dsblog/article"
 	// "time"
 )
 
@@ -67,7 +67,7 @@ func StaticRedirectHandler(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "https://storage.googleapis.com/dsblog-158823.appspot.com" + r.URL.Path, 303)
 }
 
-func init() {
+func main() {
 
 	/**
 	Title := "Hello"
@@ -88,7 +88,7 @@ func init() {
 	http.HandleFunc("/static/", StaticRedirectHandler)
 
     //appengine.Main()
-	// fs := http.FileServer(http.Dir("static"))
+    // fs := http.FileServer(http.Dir("static"))
  	// http.Handle("/static/", http.StripPrefix("/static/", fs))
-	//	http.ListenAndServe(":8080", nil)
+	http.ListenAndServe(":8080", nil)
 }
