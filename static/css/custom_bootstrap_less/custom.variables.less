@@ -14,23 +14,23 @@
 
 @gray-base: #1F1F1B;
  
-@gray-darker: lighten(@gray-base, 13.5%); // TODO:
-@gray-dark: lighten(@gray-base, 20%); // TODO:
-@gray: lighten(@gray-base, 33.5%); // TODO:
-@gray-light: lighten(@gray-base, 60%); // TODO:
-@gray-lighter: lighten(@gray-base, 93.5%); // TODO:
+@gray-darker: lighten(@gray-base, 13.5%); 
+@gray-dark: lighten(@gray-base, 20%); 
+@gray: lighten(@gray-base, 33.5%); 
+@gray-light: lighten(@gray-base, 60%); 
+@gray-lighter: lighten(@gray-base, 93.5%); 
 
-@brand-primary: #1a1a1a; // some sort of black
+@brand-primary: #212121; // some sort of black
 @brand-success: #ffffe6; // some white 
 @brand-info: #0d0d0d; // some form of black
-@brand-warning: #e6ffff; // some light blue
-@brand-danger: #16A085; // some teal bluegreen
-@brand-light: #FFFFFF; // beige
+@brand-warning: #181818; // some light blue
+@brand-danger: #8899a6; // some teal bluegreen
+@brand-light: #ffffff; // beige
 
 @body-bg: @brand-warning;
 @link-color: @brand-danger;
 @hr-border: @brand-warning;
-@text-color: lighten(#100F0F, 5%);
+@text-color: @brand-light;
 
 
 @panel-bg: @brand-light;
@@ -52,7 +52,7 @@
     }
 }
 
-@navbar-inverse-bg: @brand-danger;
+@navbar-inverse-bg: @brand-primary;
 @navbar-inverse-link-color: @brand-light;
 @navbar-inverse-link-hover-color: lighten(@brand-primary, 20%);
 @navbar-inverse-brand-color: @brand-success;
@@ -64,7 +64,7 @@
 }
 
 @pagination-color: @brand-light;
-@pagination-bg: @brand-primary;
+@pagination-bg: lighten(@brand-primary, 30%);
 @pagination-border: @brand-primary;
 @pagination-hover-color: @brand-primary;
 @pagination-hover-bg: @brand-light;
@@ -72,6 +72,11 @@
 
 @btn-primary-color: #000; 
 @btn-primary-bg: #FF91A4 ;
+
+.group2 {
+
+	text-align: right;
+}
  
 .pager {
     li {
